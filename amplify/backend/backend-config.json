@@ -1,0 +1,9 @@
+{
+	"auth": {
+		"barahi0c17c2180c17c218": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}
