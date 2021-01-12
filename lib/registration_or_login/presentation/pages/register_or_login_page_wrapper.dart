@@ -1,3 +1,4 @@
+import 'package:barahi/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,7 +8,6 @@ import 'package:barahi/core/service_locator.dart';
 import 'package:barahi/registration_or_login/presentation/bloc/registration_or_login_bloc.dart';
 import 'package:barahi/registration_or_login/presentation/bloc/registration_or_login_event.dart';
 import 'package:barahi/registration_or_login/presentation/bloc/registration_or_login_state.dart';
-import 'package:barahi/utils/constants/strings.dart';
 import 'package:barahi/utils/gimme_now_button.dart';
 import 'package:barahi/utils/gimme_now_text_form_field.dart';
 import 'package:barahi/utils/validators.dart';

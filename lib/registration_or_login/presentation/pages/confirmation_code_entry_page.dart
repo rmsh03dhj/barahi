@@ -8,7 +8,6 @@ import 'package:barahi/registration_or_login/data/models/user.dart';
 import 'package:barahi/registration_or_login/presentation/bloc/registration_or_login_bloc.dart';
 import 'package:barahi/registration_or_login/presentation/bloc/registration_or_login_event.dart';
 import 'package:barahi/registration_or_login/presentation/bloc/registration_or_login_state.dart';
-import 'package:barahi/utils/constants/strings.dart';
 import 'package:barahi/utils/gimme_now_button.dart';
 import 'package:barahi/utils/gimme_now_text_form_field.dart';
 import 'package:barahi/utils/validators.dart';
@@ -110,7 +109,7 @@ class _ConfirmCodeEntryPageState extends State<ConfirmCodeEntryPage> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: GimmeNowFormBuilderTextField(
-                                  attribute: confirmationCode,
+                                  attribute: "confirmationCode",
                                   controller: _confirmationCodeController,
                                   enableSuggestions: false,
                                   label: "Code",
@@ -121,7 +120,7 @@ class _ConfirmCodeEntryPageState extends State<ConfirmCodeEntryPage> {
                                   focusNode: _confirmationCodeFocusNode,
                                   onChanged: (val) {
                                     setState(() {
-                                      _formKey.currentState.fields[confirmationCode].currentState
+                                      _formKey.currentState.fields["confirmationCode"].currentState
                                           .validate();
                                     });
                                   },

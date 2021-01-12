@@ -1,8 +1,8 @@
+import 'package:barahi/utils/constants/strings.dart';
 import 'package:dartz/dartz.dart';
 import 'package:barahi/core/user_auth_service.dart';
 import 'package:barahi/core/error/failure.dart';
 import 'package:barahi/core/service_locator.dart';
-import 'package:barahi/utils/constants/strings.dart';
 
 import 'base_use_case.dart';
 
