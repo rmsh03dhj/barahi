@@ -1,4 +1,5 @@
 import 'package:amplify_core/amplify_core.dart';
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barahi/amplifyconfiguration.dart';
@@ -16,6 +17,7 @@ import 'core/navigation_service.dart';
 import 'core/routes/gimme_now_routes.dart';
 import 'dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'dashboard/presentation/pages/dashboard_page.dart';
+import 'models/ModelProvider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +52,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider<AppStartBloc>(
       create: (context) => sl<AppStartBloc>()..add(CheckForAuthentication()),
       child: MultiBlocProvider(
