@@ -1,3 +1,4 @@
+import 'package:barahi/core/services/local_storage_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/registration_or_login/domain/usecases/registration_or_login_usecases.dart';
@@ -8,6 +9,8 @@ import 'registration_or_login_state.dart';
 class RegistrationOrLoginBloc extends Bloc<RegistrationOrLoginEvent, RegistrationOrLoginState> {
   final signUpUseCase = sl<SignUpUseCase>();
   final signInUseCase = sl<SignInUseCase>();
+  final localStorageService = sl<LocalStorageService>();
+
   RegistrationOrLoginBloc() : super(RegistrationOrLoginInitialState());
 
   @override
@@ -18,14 +21,17 @@ class RegistrationOrLoginBloc extends Bloc<RegistrationOrLoginEvent, Registratio
         email: event.email,
         password: event.password,
       ));
-      yield failureOrUser.fold((failure) => SignUpFailedState(failure.failureMessage),
-          (user) => SignUpSuccessState(user));
+      yield failureOrUser.fold((failure) => SignUpFailedState(failure.failureMessage), (user) {
+        localStorageService.saveUid(user.uid);
+        return SignUpSuccessState(user);
+      });
     }
     if (event is SignInPressed) {
       yield RegistrationOrLoginProcessingState();
       final failureOrUser =
           await signInUseCase.execute(SignInParams(password: event.password, email: event.email));
       yield failureOrUser.fold((failure) => SignInFailedState(failure.failureMessage), (user) {
+        localStorageService.saveUid(user.uid);
         return SignInSuccessState(user);
       });
     }

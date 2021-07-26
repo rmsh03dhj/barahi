@@ -14,10 +14,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<DashboardBloc, DashboardState>(
-          builder: (context, state) {
-            if (state is DashboardLoaded) {
+        builder: (context, state) {
+          if (state is DashboardLoaded) {
+            if (state.images.length != 0) {
               return SingleChildScrollView(
-                child:  GridView.builder(
+                child: GridView.builder(
                     shrinkWrap: true,
                     itemCount: state.images.length,
                     physics: ClampingScrollPhysics(),
@@ -32,13 +33,16 @@ class _HomeState extends State<Home> {
                       );
                     }),
               );
-            }
-            if (state is DashboardLoading) {
-              return Center(child: CircularProgressIndicator());
             } else {
               return Center(child: Text(noImages));
             }
-          },
+          }
+          if (state is DashboardLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return Center(child: Text(noImages));
+          }
+        },
       ),
     );
   }

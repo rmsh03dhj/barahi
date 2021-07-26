@@ -1,3 +1,4 @@
+import 'package:barahi/core/services/local_storage_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/app_start/domain/usecases/check_for_authentication_use_case.dart';
@@ -9,6 +10,7 @@ import 'app_start_state.dart';
 class AppStartBloc extends Bloc<AppStartEvent, AppStartState> {
   final userRepository = sl<UserRepository>();
   final checkForAuthenticationUseCase = sl<CheckForAuthenticationUseCase>();
+  final localStorageService = sl<LocalStorageService>();
 
   AppStartBloc() : super(Uninitialized());
 
@@ -31,6 +33,7 @@ class AppStartBloc extends Bloc<AppStartEvent, AppStartState> {
 
   Stream<AppStartState> _mapLoggedOutToState() async* {
     userRepository.signOut();
+    localStorageService.clearAll();
     yield Unauthenticated();
   }
 }

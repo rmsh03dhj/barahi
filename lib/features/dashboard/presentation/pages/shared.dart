@@ -16,22 +16,26 @@ class _SharedImagesState extends State<SharedImages> {
       body: BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
           if (state is DashboardLoaded) {
-            return SingleChildScrollView(
-              child:  GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.images.length,
-                  physics: ClampingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: (6 / 8),
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ImageTile(imageDetail: state.images[index]),
-                    );
-                  }),
-            );
+            if (state.images.length != 0) {
+              return SingleChildScrollView(
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.images.length,
+                    physics: ClampingScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: (6 / 8),
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ImageTile(imageDetail: state.images[index]),
+                      );
+                    }),
+              );
+            } else {
+              return Center(child: Text(noImages));
+            }
           }
           if (state is DashboardLoading) {
             return Center(child: CircularProgressIndicator());
