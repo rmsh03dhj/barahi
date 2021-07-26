@@ -10,7 +10,7 @@ class _SharedState extends State<Shared> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shareds'),
+        title: Text('Shared'),
       ),
     );
   }
