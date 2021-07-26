@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>barahi</string>
+	<string>Image Viewer</string>
 	<key>NSCameraUsageDescription</key>
     <string>Some Description</string>
     <key>NSMicrophoneUsageDescription</key>

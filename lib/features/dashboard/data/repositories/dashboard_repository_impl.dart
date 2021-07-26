@@ -20,10 +20,11 @@ class DashboardRepositoryImpl implements DashboardRepository {
       final String fileUrl = await file.getDownloadURL();
       final FullMetadata fileMeta = await file.getMetadata();
       ImageDetails imageDetails = ImageDetails(
-          fileUrl,
-          file.fullPath,
-          fileMeta.customMetadata['uploaded_by'] ?? 'Nobody',
-          fileMeta.customMetadata['description'] ?? 'No description');
+         url: fileUrl,
+        fileName:  file.fullPath,
+         uploadedBy: fileMeta.customMetadata['uploaded_by'] ?? 'Nobody',
+         myFavourite: fileMeta.customMetadata['my_favourite'] ?? false,
+         uploadedAt: fileMeta.customMetadata['uploadedAt'] ?? 'No description');
       files.add(imageDetails);
     });
 
@@ -36,7 +37,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
       await storage.ref("/" + uploadImageTo + "/" + uid + "/" + fileName).putFile(
           pickedImage,
           SettableMetadata(
-              customMetadata: {'uploaded_by': 'A bad guy', 'description': 'Some description...'}));
+              customMetadata: {'uploaded_by': 'A bad guy', 'uploadedAt': 'Some description...'}));
     } on FirebaseException catch (error) {
       print(error);
     } catch (err) {
@@ -46,7 +47,6 @@ class DashboardRepositoryImpl implements DashboardRepository {
 
   Future<void> deleteImage(String deleteImageFrom, String uid, String fileName) async {
     try {
-      print(fileName);
       await storage.ref(fileName).delete();
     } on FirebaseException catch (error) {
       print(error);

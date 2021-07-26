@@ -94,8 +94,8 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
             Align(
               alignment: Alignment.topCenter,
               child: Image.asset(
-                "assets/login_icon.png",
-                scale: 5,
+                "assets/launcher_icon.jpg",
+                scale: 1.5,
               ),
             ),
             Padding(

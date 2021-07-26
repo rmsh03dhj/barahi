@@ -1,9 +1,9 @@
+import 'package:barahi/core/services/local_storage_service.dart';
+import 'package:barahi/core/services/service_locator.dart';
+import 'package:barahi/features/dashboard/domain/usecases/dashboard_usecases.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:bloc/bloc.dart';
 
-import '../../../../core/services/service_locator.dart';
-import '../../domain/usecases/dashboard_usecases.dart';
-import '../../../../core/services/local_storage_service.dart';
 import 'dashboard.dart';
 import 'dashboard_event.dart';
 import 'dashboard_state.dart';
@@ -27,7 +27,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
     if (event is DeleteImage) {
       yield DashboardLoading();
-      final failureOrUser = await deleteImageUseCase.execute(DeleteImageInputParams(UPLOAD_IN, event.imageDetails.name));
+      final failureOrUser = await deleteImageUseCase.execute(DeleteImageInputParams(UPLOAD_IN, event.imageDetails.fileName));
       failureOrUser.fold((failure) => DashboardError(failure.failureMessage),
               (user) => add(ListImages(listImagesFrom: UPLOAD_IN)));
     }

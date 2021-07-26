@@ -36,8 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (state is Authenticated) {
           Timer(Duration(seconds: 5), () async {
             BlocProvider.of<DashboardBloc>(context)..add(ListImages(listImagesFrom: UPLOAD_IN));
-            navigator.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
-                arguments: state.user);
+            navigator.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
           });
         }
       },
@@ -60,6 +59,9 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Container(
                 height: 100,
+              ),
+              Image.asset(
+                "assets/launcher_icon.jpg",
               ),
             ],
           ),

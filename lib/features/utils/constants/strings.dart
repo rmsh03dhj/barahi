@@ -1,4 +1,4 @@
-const String MyApp = 'BARAHI APP';
+const String MyApp = 'IMAGE VIEWER';
 
 const String okButtonText = 'OK';
 const String signUpButtonText = 'Sign Up';

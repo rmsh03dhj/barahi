@@ -1,8 +1,17 @@
+import 'package:flutter/foundation.dart';
 
 class ImageDetails {
- final String url;
- final String name;
- final String uploadedBy;
- final String uploadedAt;
+  final String url;
+  final String fileName;
+  final String uploadedBy;
+  final String uploadedAt;
+  final bool myFavourite;
 
-  ImageDetails(this.url, this.name, this.uploadedBy, this.uploadedAt);}
+  ImageDetails({
+    @required this.url,
+    @required this.fileName,
+    @required this.uploadedBy,
+    @required this.uploadedAt,
+    @required this.myFavourite,
+  });
+}
