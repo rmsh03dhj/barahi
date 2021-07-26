@@ -1,16 +1,44 @@
+import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/dashboard.dart';
+import 'widgets/image_tile.dart';
 
-class Dashboard extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _DashboardState createState() => _DashboardState();
+  _HomeState createState() => _HomeState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dashboard'),
+      body: BlocBuilder<DashboardBloc, DashboardState>(
+          builder: (context, state) {
+            if (state is DashboardLoaded) {
+              return SingleChildScrollView(
+                child:  GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.images.length,
+                    physics: ClampingScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: (6 / 8),
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ImageTile(imageDetail: state.images[index]),
+                      );
+                    }),
+              );
+            }
+            if (state is DashboardLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return Center(child: Text(noImages));
+            }
+          },
       ),
     );
   }

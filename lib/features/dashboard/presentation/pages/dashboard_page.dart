@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
+import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,11 +32,11 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
 
   int currentTab = 0; // to keep track of active tab index
   final List<Widget> screens = [
-    Dashboard(),
-    Shared(),
+    Home(),
+    SharedImages(),
   ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = Dashboard(); // Our first view in viewport
+  Widget currentScreen = Home(); // Our first view in viewport
 
   @override
   void initState() {
@@ -88,7 +89,7 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                   onPressed: () {
                     setState(() {
                       currentScreen =
-                          Dashboard(); // if user taps on this dashboard tab will be active
+                          Home(); // if user taps on this dashboard tab will be active
                       currentTab = 0;
                     });
                   },
@@ -96,11 +97,11 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(
-                        Icons.dashboard,
+                        Icons.home,
                         color: currentTab == 0 ? Colors.blue : Colors.grey,
                       ),
                       Text(
-                        'Dashboard',
+                        home,
                         style: TextStyle(
                           color: currentTab == 0 ? Colors.blue : Colors.grey,
                         ),
@@ -121,7 +122,7 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                   onPressed: () {
                     setState(() {
                       currentScreen =
-                          Shared(); // if user taps on this dashboard tab will be active
+                          SharedImages(); // if user taps on this dashboard tab will be active
                       currentTab = 2;
                     });
                   },
@@ -129,11 +130,11 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(
-                        Icons.dashboard,
+                        Icons.people,
                         color: currentTab == 2 ? Colors.blue : Colors.grey,
                       ),
                       Text(
-                        'Profile',
+                        shared,
                         style: TextStyle(
                           color: currentTab == 2 ? Colors.blue : Colors.grey,
                         ),
@@ -182,28 +183,13 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
 
   void openCamera() async {
     var imgCamera = await _picker.getImage(source: ImageSource.camera);
-    setState(() {
-      imgFile = File(imgCamera.path);
-    });
+    BlocProvider.of<DashboardBloc>(context).add(UploadImage(file: File(imgCamera.path), uploadImageTo: UPLOAD_IN));
     Navigator.of(context).pop();
   }
 
   void openGallery() async {
     var imgGallery = await _picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      imgFile = File(imgGallery.path);
-    });
+     BlocProvider.of<DashboardBloc>(context).add(UploadImage(file: File(imgGallery.path),uploadImageTo: UPLOAD_IN));
     Navigator.of(context).pop();
-  }
-
-  void uploadPicture(File imgFile) {
-    BlocProvider.of<DashboardBloc>(context).add(UploadImage(imgFile));
-  }
-  Widget displayImage(){
-    if(imgFile == null){
-      return Text("No Image Selected!");
-    } else{
-      return Image.file(imgFile, width: 350, height: 350);
-    }
   }
 }

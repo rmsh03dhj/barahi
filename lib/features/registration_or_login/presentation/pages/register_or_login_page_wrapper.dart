@@ -72,12 +72,12 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
           );
       }
       if (state is SignUpSuccessState) {
-        BlocProvider.of<DashboardBloc>(context)..add(FetchDashboardForCurrentLocation());
+        BlocProvider.of<DashboardBloc>(context)..add(ListImages(listImagesFrom: UPLOAD_IN));
         _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
             arguments: state.user);
       }
       if (state is SignInSuccessState) {
-        BlocProvider.of<DashboardBloc>(context)..add(FetchDashboardForCurrentLocation());
+        BlocProvider.of<DashboardBloc>(context)..add(ListImages(listImagesFrom: UPLOAD_IN));
         _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
             arguments: state.user);
       }

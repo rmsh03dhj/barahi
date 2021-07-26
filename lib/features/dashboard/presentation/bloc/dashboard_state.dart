@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entities/image_details.dart';
+
 abstract class DashboardState extends Equatable {
   @override
   List<Object> get props => [];
@@ -8,6 +10,11 @@ abstract class DashboardState extends Equatable {
 class DashboardEmpty extends DashboardState {}
 
 class DashboardLoading extends DashboardState {}
+class DashboardLoaded extends DashboardState {
+  final List<ImageDetails> images;
+
+  DashboardLoaded(this.images);
+}
 
 class DashboardError extends DashboardState {
   final String errorMessage;
