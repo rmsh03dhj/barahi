@@ -61,7 +61,7 @@ class _ImageViewerState extends State<ImageViewer> {
             ),
           );
       }
-      if (state is ImageUploadedState) {
+      if (state is ImageUploadedState || state is ImageDetailsUpdatedState) {
         BlocProvider.of<DashboardBloc>(context)
           ..add(ListImages(listImagesFrom: UPLOAD_IN));
         _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard);

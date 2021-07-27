@@ -58,7 +58,7 @@ class _ImageTileState extends State<ImageTile> {
                         isFav= !isFav;
                       });
                       BlocProvider.of<DashboardBloc>(context).add(
-                          UpdateImageDetails(
+                          UpdateMyFavourite(
                               imageDetails:
                                   widget.imageDetail.copyWith(myFavourite: isFav)));
                     },

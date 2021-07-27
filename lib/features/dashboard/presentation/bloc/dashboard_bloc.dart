@@ -1,7 +1,6 @@
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/domain/usecases/dashboard_usecases.dart';
 import 'package:barahi/features/dashboard/domain/usecases/update_image_details_use_case.dart';
-import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:bloc/bloc.dart';
 
 import 'dashboard.dart';
@@ -43,11 +42,18 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           (failure) => DashboardError(failure.failureMessage),
           (uploaded) => ImageUploadedState());
     }
+    if (event is UpdateMyFavourite) {
+      updateImageDetailsUseCase
+          .execute(event.imageDetails)
+          .then((value) => print("success"));
+    }
+
     if (event is UpdateImageDetails) {
       yield DashboardLoading();
       updateImageDetailsUseCase
           .execute(event.imageDetails)
-          .then((value) => add(ListImages(listImagesFrom: UPLOAD_IN)));
+          .then((value) => print("success"));
+      yield ImageDetailsUpdatedState();
     }
   }
 }

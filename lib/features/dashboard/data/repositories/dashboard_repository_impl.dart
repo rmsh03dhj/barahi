@@ -51,7 +51,6 @@ class DashboardRepositoryImpl implements DashboardRepository {
         ];
         final exists =
             await fsInstance.collection("users").doc(firebaseUser.uid).get();
-        print(exists.data());
         if (exists.data() != null) {
           await fsInstance.collection("users").doc(firebaseUser.uid).update(
             {"uploads": FieldValue.arrayUnion(list)},
@@ -104,12 +103,18 @@ class DashboardRepositoryImpl implements DashboardRepository {
           await fsInstance.collection("users").doc(firebaseUser.uid).get();
       if (querySnapshot.data() != null) {
         List data = querySnapshot.data()['uploads'];
-        List<ImageDetails> updatedDetails = [];
+        List updatedDetails = [];
         data.forEach((element) {
           if (element['url'] != imageDetails.url) {
             updatedDetails.add(element);
           } else {
-            updatedDetails.add(imageDetails);
+            updatedDetails.add( {
+              "uploaded_at":
+              DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
+              "fileName": imageDetails.fileName,
+              "url": imageDetails.url,
+              "myFavourite": imageDetails.myFavourite,
+            });
           }
         });
         await fsInstance

@@ -51,3 +51,12 @@ class UpdateImageDetails extends DashboardEvent {
   @override
   String toString() => 'UpdateImageDetails';
 }
+
+class UpdateMyFavourite extends DashboardEvent {
+  final ImageDetails imageDetails;
+
+  UpdateMyFavourite({@required this.imageDetails});
+
+  @override
+  String toString() => 'UpdateMyFavourite';
+}

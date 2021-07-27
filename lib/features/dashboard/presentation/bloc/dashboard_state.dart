@@ -30,3 +30,6 @@ class ImageUploadedState extends DashboardState {
 class ImageDeletedState extends DashboardState {
   ImageDeletedState();
 }
+class ImageDetailsUpdatedState extends DashboardState {
+  ImageDetailsUpdatedState();
+}
