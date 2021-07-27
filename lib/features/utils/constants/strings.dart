@@ -1,6 +1,7 @@
 const String MyApp = 'IMAGE VIEWER';
 
 const String okButtonText = 'OK';
+const String saveButtonText = 'Save';
 const String signUpButtonText = 'Sign Up';
 const String signInButtonText = 'Sign In';
 

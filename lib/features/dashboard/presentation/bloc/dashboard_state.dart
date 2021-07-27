@@ -22,3 +22,11 @@ class DashboardError extends DashboardState {
 
   DashboardError(this.errorMessage);
 }
+
+class ImageUploadedState extends DashboardState {
+  ImageUploadedState();
+}
+
+class ImageDeletedState extends DashboardState {
+  ImageDeletedState();
+}

@@ -1,9 +1,12 @@
-import 'package:barahi/features/dashboard/domain/entities/image_details.dart';
+import 'dart:io';
+
 import 'package:barahi/features/dashboard/domain/repositories/dashboard_repository.dart';
+import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:dartz/dartz.dart';
 import 'package:barahi/core/error/failure.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/core/usecases/base_use_case.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class UploadImageUseCase
     implements BaseUseCase<bool, UploadImageInputParams> {}
@@ -15,7 +18,7 @@ class UploadImageUseCaseImpl implements UploadImageUseCase {
       UploadImageInputParams uploadImageInputParams) async {
     try {
       await dashboardRepo.uploadImage(uploadImageInputParams.uploadImageTo,
-          uploadImageInputParams.imageDetails);
+          uploadImageInputParams.fileToUpload, uploadImageInputParams.fileName);
       return Right(true);
     } catch (e) {
       return Left(GeneralFailure(failureMessage: e.toString()));
@@ -25,7 +28,11 @@ class UploadImageUseCaseImpl implements UploadImageUseCase {
 
 class UploadImageInputParams {
   final String uploadImageTo;
-  final ImageDetails imageDetails;
+  final File fileToUpload;
+  final String fileName;
 
-  UploadImageInputParams(this.uploadImageTo, this.imageDetails);
+  UploadImageInputParams(
+      {this.uploadImageTo = UPLOAD_IN,
+      @required this.fileToUpload,
+      @required this.fileName});
 }

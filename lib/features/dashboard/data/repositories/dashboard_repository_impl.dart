@@ -28,25 +28,20 @@ class DashboardRepositoryImpl implements DashboardRepository {
   }
 
   Future<void> uploadImage(
-      String uploadImageTo, ImageDetails imageDetails) async {
+      String uploadImageTo, File fileToUpload, String fileName) async {
     try {
       final addingImage = await storage
-          .ref("/" +
-              uploadImageTo +
-              "/" +
-              firebaseUser.uid +
-              "/" +
-              imageDetails.fileName)
-          .putFile(File(imageDetails.fileName));
+          .ref("/" + uploadImageTo + "/" + firebaseUser.uid + "/" + fileName)
+          .putFile(fileToUpload);
       if (addingImage.state == TaskState.success) {
         final String downloadUrl = await addingImage.ref.getDownloadURL();
         var list = [
           {
             "uploaded_at":
                 DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
-            "fileName": imageDetails.fileName,
+            "fileName": fileName,
             "url": downloadUrl,
-            "myFavourite": imageDetails.myFavourite,
+            "myFavourite": false,
           }
         ];
         await fsInstance
@@ -57,8 +52,10 @@ class DashboardRepositoryImpl implements DashboardRepository {
         throw "Something went wrong.";
       }
     } on FirebaseException catch (error) {
+      print(error);
       throw (error);
     } catch (err) {
+      print(err);
       throw (err);
     }
   }

@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:barahi/features/dashboard/domain/entities/image_details.dart';
+import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class DashboardEvent extends Equatable {
@@ -20,9 +20,14 @@ class ListImages extends DashboardEvent {
 }
 
 class UploadImage extends DashboardEvent {
-  final ImageDetails imageDetails;
+  final File file;
+  final String fileName;
   final String uploadImageTo;
-  UploadImage({@required this.imageDetails, @required this.uploadImageTo});
+
+  UploadImage(
+      {@required this.file,
+      @required this.fileName,
+      this.uploadImageTo = UPLOAD_IN});
 
   @override
   String toString() => 'UploadImage';
