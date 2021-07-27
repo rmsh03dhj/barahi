@@ -13,7 +13,6 @@ class MyPickImageScreen extends StatefulWidget {
 }
 
 class _MyPickImageScreenState extends State<MyPickImageScreen> {
-
   File imgFile;
   final imgPicker = ImagePicker();
 
@@ -62,10 +61,10 @@ class _MyPickImageScreenState extends State<MyPickImageScreen> {
     Navigator.of(context).pop();
   }
 
-  Widget displayImage(){
-    if(imgFile == null){
+  Widget displayImage() {
+    if (imgFile == null) {
       return Text("No Image Selected!");
-    } else{
+    } else {
       return Image.file(imgFile, width: 350, height: 350);
     }
   }
@@ -93,5 +92,4 @@ class _MyPickImageScreenState extends State<MyPickImageScreen> {
       ),
     );
   }
-
 }

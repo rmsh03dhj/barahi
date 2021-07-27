@@ -1,5 +1,3 @@
-
-import 'package:barahi/core/services/local_storage_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/features/app_start/domain/usecases/check_for_authentication_use_case.dart';
@@ -33,9 +31,9 @@ Future<void> init() async {
 
   ///repositories
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());
-  sl.registerLazySingleton<DashboardRepository>(() => DashboardRepositoryImpl());
+  sl.registerLazySingleton<DashboardRepository>(
+      () => DashboardRepositoryImpl());
 
   ///services
   sl.registerLazySingleton(() => NavigationService());
-  sl.registerLazySingleton(() => LocalStorageService());
 }

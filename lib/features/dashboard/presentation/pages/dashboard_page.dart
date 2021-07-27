@@ -212,6 +212,7 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
     var imgGallery = await _picker.getImage(source: ImageSource.gallery);
 
     Navigator.of(context).pop();
-    sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer, arguments: ImageViewerInput(localImage: imgGallery.path));
+    sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer,
+        arguments: ImageViewerInput(localImage: imgGallery.path));
   }
 }

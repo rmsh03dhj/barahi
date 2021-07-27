@@ -14,23 +14,21 @@ class DashboardRepositoryImpl implements DashboardRepository {
   final fsInstance = FirebaseFirestore.instance;
   final firebaseUser = FirebaseAuth.instance.currentUser;
 
-  Future<List<ImageDetails>> loadImages(String from, String uid) async {
+  Future<List<ImageDetails>> loadImages(String from) async {
     try {
-      final querySnapshot = await fsInstance
-          .collection("users")
-          .doc(firebaseUser.uid)
-          .get();
-    var images =  querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+      final querySnapshot =
+          await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      var images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
         return ImageDetails.fromMap(item);
       }).toList();
-    return images;
+      return images;
     } catch (e) {
-      throw(e);
+      throw (e);
     }
   }
 
   Future<void> uploadImage(
-      String uploadImageTo, String uid, ImageDetails imageDetails) async {
+      String uploadImageTo, ImageDetails imageDetails) async {
     try {
       final addingImage = await storage
           .ref("/" +
@@ -65,14 +63,13 @@ class DashboardRepositoryImpl implements DashboardRepository {
     }
   }
 
-  Future<void> deleteImage(
-      String deleteImageFrom, String uid, String fileName) async {
+  Future<void> deleteImage(String deleteImageFrom, String fileName) async {
     try {
       await storage.ref(fileName).delete();
     } on FirebaseException catch (error) {
-      throw(error);
+      throw (error);
     } catch (err) {
-      throw(err);
+      throw (err);
     }
   }
 }

@@ -31,7 +31,8 @@ class UploadImage extends DashboardEvent {
 class DeleteAndUploadNew extends DashboardEvent {
   final ImageDetails imageDetails;
   final String uploadImageTo;
-  DeleteAndUploadNew({@required this.imageDetails, @required this.uploadImageTo});
+  DeleteAndUploadNew(
+      {@required this.imageDetails, @required this.uploadImageTo});
 
   @override
   String toString() => 'DeleteAndUploadNew';

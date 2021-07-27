@@ -7,9 +7,7 @@ import 'package:barahi/features/app_start/presentation/bloc/app_start_bloc.dart'
 import 'package:barahi/features/app_start/presentation/bloc/app_start_event.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 
-
 class SideDrawer extends StatelessWidget {
-
   SideDrawer();
 
   @override
@@ -57,7 +55,8 @@ class SideDrawer extends StatelessWidget {
             leading: Icon(Icons.logout),
             onTap: () {
               BlocProvider.of<AppStartBloc>(context)..add(LoggedOut());
-              sl<NavigationService>().navigateToAndRemoveUntil(MyAppRoutes.signUpOrSignIn);
+              sl<NavigationService>()
+                  .navigateToAndRemoveUntil(MyAppRoutes.signUpOrSignIn);
             },
           ),
         ]),

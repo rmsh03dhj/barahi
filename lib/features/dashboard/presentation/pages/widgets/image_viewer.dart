@@ -183,17 +183,17 @@ class _ImageViewerState extends State<ImageViewer> {
                           print(widget.imageViewerInput.localImage != null);
 
                           if (widget.imageViewerInput.localImage != null) {
-                            BlocProvider.of<DashboardBloc>(context).add(
-                                UploadImage(
+                            BlocProvider.of<DashboardBloc>(context)
+                                .add(UploadImage(
                                     imageDetails: ImageDetails(
-
                                       fileName: fileNameController.text,
                                     ),
                                     uploadImageTo: UPLOAD_IN));
                           } else {
                             BlocProvider.of<DashboardBloc>(context).add(
                                 DeleteAndUploadNew(
-                                    imageDetails:widget.imageViewerInput.imageDetail,
+                                    imageDetails:
+                                        widget.imageViewerInput.imageDetail,
                                     uploadImageTo: UPLOAD_IN));
                           }
                         });

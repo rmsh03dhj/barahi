@@ -18,8 +18,8 @@ class ImageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:
-            () => sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer, arguments: ImageViewerInput(imageDetail: imageDetail)),
+      onTap: () => sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer,
+          arguments: ImageViewerInput(imageDetail: imageDetail)),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.5,
         height: MediaQuery.of(context).size.height * 0.3,
@@ -40,8 +40,7 @@ class ImageTile extends StatelessWidget {
                   child: FloatingActionButton(
                     heroTag: null,
                     backgroundColor: Colors.white,
-                    onPressed: () {
-                      },
+                    onPressed: () {},
                     child: Icon(
                       Icons.share,
                       size: 32,
@@ -61,8 +60,9 @@ class ImageTile extends StatelessWidget {
                     heroTag: null,
                     backgroundColor: Colors.white,
                     onPressed: () {
-                      BlocProvider.of<DashboardBloc>(context)
-                          .add(DeleteImage(imageDetails: imageDetail, deleteImageFrom: UPLOAD_IN));
+                      BlocProvider.of<DashboardBloc>(context).add(DeleteImage(
+                          imageDetails: imageDetail,
+                          deleteImageFrom: UPLOAD_IN));
                     },
                     child: Icon(
                       Icons.delete_forever,
