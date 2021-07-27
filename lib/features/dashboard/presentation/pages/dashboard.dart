@@ -17,10 +17,10 @@ class _HomeState extends State<Home> {
         builder: (context, state) {
           if (state is DashboardLoaded) {
             if (state.images.length != 0) {
-              return SingleChildScrollView(
-                child: OrientationBuilder(
-                  builder: (context, orientation) {
-                    return GridView.builder(
+              return OrientationBuilder(
+                builder: (context, orientation) {
+                  return SingleChildScrollView(
+                    child: GridView.builder(
                         shrinkWrap: true,
                         itemCount: state.images.length,
                         physics: ClampingScrollPhysics(),
@@ -34,9 +34,9 @@ class _HomeState extends State<Home> {
                             padding: const EdgeInsets.all(16.0),
                             child: ImageTile(imageDetail: state.images[index]),
                           );
-                        });
-                  },
-                ),
+                        }),
+                  );
+                },
               );
             } else {
               return Center(child: Text(noImages));
