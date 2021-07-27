@@ -21,6 +21,9 @@ const String pleaseTryAgain = 'Please try again.';
 const String noImages = 'No images available.';
 const String home = 'HOME';
 const String shared = 'SHARED';
+const String fileName = 'File name:';
+const String uploadedBy = 'Uploaded By:';
+const String uploadedAt = 'Uploaded At:';
 
 ///
 const String UPLOAD_IN = 'uploads';

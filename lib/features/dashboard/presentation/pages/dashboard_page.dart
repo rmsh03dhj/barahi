@@ -53,7 +53,10 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
             Center(
               child: Text(
                 DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
-                style: TextStyle(color: Theme.of(context).disabledColor, fontSize: 14),
+                style: TextStyle(
+                  color: Theme.of(context).disabledColor,
+                  fontSize: 14,
+                ),
               ),
             )
           ],
@@ -97,7 +100,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.home,
-                            color: currentTab == 0 ? Colors.tealAccent : Colors.grey,
+                            color: currentTab == 0
+                                ? Colors.tealAccent
+                                : Colors.grey,
                           ),
                         ),
                         Padding(
@@ -105,7 +110,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                           child: Text(
                             home,
                             style: TextStyle(
-                              color: currentTab == 0 ? Colors.tealAccent : Colors.grey,
+                              color: currentTab == 0
+                                  ? Colors.tealAccent
+                                  : Colors.grey,
                             ),
                           ),
                         ),
@@ -134,7 +141,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.people,
-                                color: currentTab == 2 ? Colors.tealAccent : Colors.grey,
+                                color: currentTab == 2
+                                    ? Colors.tealAccent
+                                    : Colors.grey,
                               ),
                             ),
                           ],
@@ -144,7 +153,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                           child: Text(
                             shared,
                             style: TextStyle(
-                              color: currentTab == 2 ? Colors.tealAccent : Colors.grey,
+                              color: currentTab == 2
+                                  ? Colors.tealAccent
+                                  : Colors.grey,
                             ),
                           ),
                         ),
@@ -198,8 +209,8 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
 
   void openGallery() async {
     var imgGallery = await _picker.getImage(source: ImageSource.gallery);
-    BlocProvider.of<DashboardBloc>(context)
-        .add(UploadImage(file: File(imgGallery.path), uploadImageTo: UPLOAD_IN));
+    BlocProvider.of<DashboardBloc>(context).add(
+        UploadImage(file: File(imgGallery.path), uploadImageTo: UPLOAD_IN));
     Navigator.of(context).pop();
   }
 }

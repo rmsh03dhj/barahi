@@ -1,3 +1,4 @@
+import 'package:barahi/features/dashboard/presentation/pages/widgets/image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barahi/splash_screen.dart';
@@ -71,6 +72,14 @@ Route _registerRoutesWithParameters(RouteSettings settings) {
       settings: RouteSettings(name: MyAppRoutes.dashboard),
       builder: (context) {
         return DashboardDashboardPage(user: user);
+      },
+    );
+  } else if (settings.name == MyAppRoutes.imageViewer) {
+    final imageDetails = settings.arguments;
+    return MaterialPageRoute(
+      settings: RouteSettings(name: MyAppRoutes.imageViewer),
+      builder: (context) {
+        return ImageViewer(imageDetail: imageDetails);
       },
     );
   } else {

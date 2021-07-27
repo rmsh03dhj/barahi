@@ -18,20 +18,25 @@ class _HomeState extends State<Home> {
           if (state is DashboardLoaded) {
             if (state.images.length != 0) {
               return SingleChildScrollView(
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.images.length,
-                    physics: ClampingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: (6 / 8),
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: ImageTile(imageDetail: state.images[index]),
-                      );
-                    }),
+                child: OrientationBuilder(
+                  builder: (context, orientation) {
+                    return GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.images.length,
+                        physics: ClampingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              orientation == Orientation.portrait ? 2 : 3,
+                          childAspectRatio: (5.5 / 7),
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ImageTile(imageDetail: state.images[index]),
+                          );
+                        });
+                  },
+                ),
               );
             } else {
               return Center(child: Text(noImages));
