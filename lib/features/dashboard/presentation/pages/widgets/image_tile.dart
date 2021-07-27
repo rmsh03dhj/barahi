@@ -2,6 +2,7 @@ import 'package:barahi/core/routes/weather_app_routes.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
+import 'package:barahi/features/dashboard/presentation/pages/widgets/image_viewer.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +19,7 @@ class ImageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap:
-            () => sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer, arguments: imageDetail),
+            () => sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer, arguments: ImageViewerInput(imageDetail: imageDetail)),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.5,
         height: MediaQuery.of(context).size.height * 0.3,
@@ -40,8 +41,6 @@ class ImageTile extends StatelessWidget {
                     heroTag: null,
                     backgroundColor: Colors.white,
                     onPressed: () {
-//                      BlocProvider.of<DashboardBloc>(context)
-//                          .add(UploadImage(file: imageDetail.name, uploadImageTo: "shared"));
                       },
                     child: Icon(
                       Icons.share,

@@ -1,17 +1,21 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 
 class ImageDetails {
   final String url;
   final String fileName;
-  final String uploadedBy;
   final String uploadedAt;
   final bool myFavourite;
 
   ImageDetails({
-    @required this.url,
-    @required this.fileName,
-    @required this.uploadedBy,
-    @required this.uploadedAt,
-    @required this.myFavourite,
+    this.url,
+    this.fileName,
+    this.uploadedAt,
+    this.myFavourite = false,
   });
+
+  ImageDetails.fromMap(Map<dynamic, dynamic> data)
+      : url = data['url'],
+        uploadedAt = data['uploaded_at'],
+        myFavourite = data['myFavourite'],
+        fileName = data['fileName'];
 }

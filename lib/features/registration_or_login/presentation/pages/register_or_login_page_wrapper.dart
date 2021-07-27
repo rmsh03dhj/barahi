@@ -320,9 +320,8 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
     _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
-
-  void fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
+}
+void fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+  currentFocus.unfocus();
+  FocusScope.of(context).requestFocus(nextFocus);
 }

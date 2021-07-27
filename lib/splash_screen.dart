@@ -29,12 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
       listener: (context, state) {
         if (state is Unauthenticated || state is Uninitialized) {
           Timer(
-            Duration(seconds: 5),
+            Duration(seconds: 1),
             () => navigator.navigateToAndReplace(MyAppRoutes.signUpOrSignIn),
           );
         }
         if (state is Authenticated) {
-          Timer(Duration(seconds: 5), () async {
+          Timer(Duration(seconds: 1), () async {
             BlocProvider.of<DashboardBloc>(context)..add(ListImages(listImagesFrom: UPLOAD_IN));
             navigator.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
           });

@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:barahi/core/routes/weather_app_routes.dart';
+import 'package:barahi/features/dashboard/domain/entities/image_details.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
+import 'package:barahi/features/dashboard/presentation/pages/widgets/image_viewer.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -202,15 +205,13 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
 
   void openCamera() async {
     var imgCamera = await _picker.getImage(source: ImageSource.camera);
-    BlocProvider.of<DashboardBloc>(context)
-        .add(UploadImage(file: File(imgCamera.path), uploadImageTo: UPLOAD_IN));
     Navigator.of(context).pop();
   }
 
   void openGallery() async {
     var imgGallery = await _picker.getImage(source: ImageSource.gallery);
-    BlocProvider.of<DashboardBloc>(context).add(
-        UploadImage(file: File(imgGallery.path), uploadImageTo: UPLOAD_IN));
+
     Navigator.of(context).pop();
+    sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer, arguments: ImageViewerInput(localImage: imgGallery.path));
   }
 }

@@ -75,11 +75,11 @@ Route _registerRoutesWithParameters(RouteSettings settings) {
       },
     );
   } else if (settings.name == MyAppRoutes.imageViewer) {
-    final imageDetails = settings.arguments;
+    final imageViewerInput = settings.arguments;
     return MaterialPageRoute(
       settings: RouteSettings(name: MyAppRoutes.imageViewer),
       builder: (context) {
-        return ImageViewer(imageDetail: imageDetails);
+        return ImageViewer(imageViewerInput: imageViewerInput);
       },
     );
   } else {

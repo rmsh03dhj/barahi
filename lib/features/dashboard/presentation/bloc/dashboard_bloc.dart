@@ -33,9 +33,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
     if (event is UploadImage) {
       yield DashboardLoading();
-      final failureOrUser = await uploadImageUseCase.execute(UploadImageInputParams(UPLOAD_IN, event.file));
+      final failureOrUser = await uploadImageUseCase.execute(UploadImageInputParams(UPLOAD_IN, event.imageDetails));
       failureOrUser.fold((failure) => DashboardError(failure.failureMessage),
               (user) => add(ListImages(listImagesFrom: UPLOAD_IN)));
+    }if (event is DeleteAndUploadNew) {
+      yield DashboardLoading();
+      final failureOrUser = await deleteImageUseCase.execute(DeleteImageInputParams(UPLOAD_IN, event.imageDetails.fileName));
+      failureOrUser.fold((failure) => DashboardError(failure.failureMessage),
+              (user) => add(UploadImage(uploadImageTo: UPLOAD_IN, imageDetails: event.imageDetails)));
     }
   }
 }

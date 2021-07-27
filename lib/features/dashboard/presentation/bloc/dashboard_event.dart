@@ -20,12 +20,21 @@ class ListImages extends DashboardEvent {
 }
 
 class UploadImage extends DashboardEvent {
-  final File file;
+  final ImageDetails imageDetails;
   final String uploadImageTo;
-  UploadImage({@required this.file, @required this.uploadImageTo});
+  UploadImage({@required this.imageDetails, @required this.uploadImageTo});
 
   @override
   String toString() => 'UploadImage';
+}
+
+class DeleteAndUploadNew extends DashboardEvent {
+  final ImageDetails imageDetails;
+  final String uploadImageTo;
+  DeleteAndUploadNew({@required this.imageDetails, @required this.uploadImageTo});
+
+  @override
+  String toString() => 'DeleteAndUploadNew';
 }
 
 class DeleteImage extends DashboardEvent {
