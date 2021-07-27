@@ -19,7 +19,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
       final firebaseUser = FirebaseAuth.instance.currentUser;
       final querySnapshot =
           await fsInstance.collection("users").doc(firebaseUser.uid).get();
-      if(querySnapshot.data()!=null) {
+      if (querySnapshot.data() != null) {
         images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
           return ImageDetails.fromMap(item);
         }).toList();
@@ -49,18 +49,17 @@ class DashboardRepositoryImpl implements DashboardRepository {
             "myFavourite": false,
           }
         ];
-        final exists = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+        final exists =
+            await fsInstance.collection("users").doc(firebaseUser.uid).get();
         print(exists.data());
-        if(exists.data()!=null) {
-          await fsInstance
-              .collection("users")
-              .doc(firebaseUser.uid)
-              .update({"uploads": FieldValue.arrayUnion(list)},);
-        }else{
-          await fsInstance
-              .collection("users")
-              .doc(firebaseUser.uid)
-              .set({"uploads": FieldValue.arrayUnion(list)},SetOptions(merge: true));
+        if (exists.data() != null) {
+          await fsInstance.collection("users").doc(firebaseUser.uid).update(
+            {"uploads": FieldValue.arrayUnion(list)},
+          );
+        } else {
+          await fsInstance.collection("users").doc(firebaseUser.uid).set(
+              {"uploads": FieldValue.arrayUnion(list)},
+              SetOptions(merge: true));
         }
       } else {
         throw "Something went wrong.";
@@ -74,12 +73,55 @@ class DashboardRepositoryImpl implements DashboardRepository {
     }
   }
 
-  Future<void> deleteImage(String deleteImageFrom, String fileName) async {
+  Future<void> deleteImage(String deleteImageFrom, String url) async {
     try {
-      await storage.ref(fileName).delete();
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      final querySnapshot =
+          await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      if (querySnapshot.data() != null) {
+        List data = querySnapshot.data()['uploads'];
+        data.retainWhere((element) => element['url'] != url);
+        await fsInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .set({"uploads": data});
+        print(storage.refFromURL(url));
+        storage.refFromURL(url).delete();
+      }
     } on FirebaseException catch (error) {
+      print(error);
       throw (error);
     } catch (err) {
+      print(err);
+      throw (err);
+    }
+  }
+
+  Future<void> updateImageDetails(ImageDetails imageDetails) async {
+    try {
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      final querySnapshot =
+          await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      if (querySnapshot.data() != null) {
+        List data = querySnapshot.data()['uploads'];
+        List<ImageDetails> updatedDetails = [];
+        data.forEach((element) {
+          if (element['url'] != imageDetails.url) {
+            updatedDetails.add(element);
+          } else {
+            updatedDetails.add(imageDetails);
+          }
+        });
+        await fsInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .set({"uploads": updatedDetails});
+      }
+    } on FirebaseException catch (error) {
+      print(error);
+      throw (error);
+    } catch (err) {
+      print(err);
       throw (err);
     }
   }

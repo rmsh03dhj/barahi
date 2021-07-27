@@ -18,4 +18,17 @@ class ImageDetails {
         uploadedAt = data['uploaded_at'],
         myFavourite = data['myFavourite'],
         fileName = data['fileName'];
+
+  ImageDetails copyWith({
+    String url,
+    String fileName,
+    String uploadedAt,
+    bool myFavourite,
+  }) {
+    return ImageDetails(
+        url: url ?? this.url,
+        fileName: fileName ?? this.fileName,
+        uploadedAt: uploadedAt ?? this.uploadedAt,
+        myFavourite: myFavourite ?? this.myFavourite);
+  }
 }

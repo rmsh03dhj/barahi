@@ -188,9 +188,9 @@ class _ImageViewerState extends State<ImageViewer> {
         ),
       );
     } else {
-      BlocProvider.of<DashboardBloc>(context).add(DeleteAndUploadNew(
-          imageDetails: widget.imageViewerInput.imageDetail,
-          uploadImageTo: UPLOAD_IN));
+      BlocProvider.of<DashboardBloc>(context).add(UpdateImageDetails(
+          imageDetails: widget.imageViewerInput.imageDetail
+              .copyWith(fileName: fileNameController.text)));
     }
   }
 }
