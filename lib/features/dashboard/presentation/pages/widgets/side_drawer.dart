@@ -23,8 +23,8 @@ class SideDrawer extends StatelessWidget {
                   height: 72,
                   width: 72,
                   child: Image.asset(
-                    "assets/login_icon.png",
-                    scale: 3,
+                    "assets/launcher_icon.jpg",
+                    scale: 5,
                   ),
                 ),
                 Container(
@@ -34,16 +34,6 @@ class SideDrawer extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Welcome",
-                    style: TextStyle(fontSize: 10),
-                  ),
-                ),
-                Container(
-                  height: 4,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Test",
                     style: TextStyle(fontSize: 10),
                   ),
                 ),

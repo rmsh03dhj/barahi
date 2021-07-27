@@ -12,17 +12,21 @@ class DashboardRepositoryImpl implements DashboardRepository {
 
   final storage = FirebaseStorage.instance;
   final fsInstance = FirebaseFirestore.instance;
-  final firebaseUser = FirebaseAuth.instance.currentUser;
 
   Future<List<ImageDetails>> loadImages(String from) async {
     try {
+      List<ImageDetails> images = [];
+      final firebaseUser = FirebaseAuth.instance.currentUser;
       final querySnapshot =
           await fsInstance.collection("users").doc(firebaseUser.uid).get();
-      var images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
-        return ImageDetails.fromMap(item);
-      }).toList();
+      if(querySnapshot.data()!=null) {
+        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+          return ImageDetails.fromMap(item);
+        }).toList();
+      }
       return images;
     } catch (e) {
+      print(e);
       throw (e);
     }
   }
@@ -30,6 +34,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<void> uploadImage(
       String uploadImageTo, File fileToUpload, String fileName) async {
     try {
+      final firebaseUser = FirebaseAuth.instance.currentUser;
       final addingImage = await storage
           .ref("/" + uploadImageTo + "/" + firebaseUser.uid + "/" + fileName)
           .putFile(fileToUpload);
@@ -44,10 +49,19 @@ class DashboardRepositoryImpl implements DashboardRepository {
             "myFavourite": false,
           }
         ];
-        await fsInstance
-            .collection("users")
-            .doc(firebaseUser.uid)
-            .update({"uploads": FieldValue.arrayUnion(list)});
+        final exists = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+        print(exists.data());
+        if(exists.data()!=null) {
+          await fsInstance
+              .collection("users")
+              .doc(firebaseUser.uid)
+              .update({"uploads": FieldValue.arrayUnion(list)},);
+        }else{
+          await fsInstance
+              .collection("users")
+              .doc(firebaseUser.uid)
+              .set({"uploads": FieldValue.arrayUnion(list)},SetOptions(merge: true));
+        }
       } else {
         throw "Something went wrong.";
       }
