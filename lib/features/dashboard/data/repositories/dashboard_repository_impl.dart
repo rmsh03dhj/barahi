@@ -130,4 +130,35 @@ class DashboardRepositoryImpl implements DashboardRepository {
       throw (err);
     }
   }
+
+  Future<ImageDetails> searchImage(String searchText) async {
+    try {
+      ImageDetails imageDetails;
+
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      final querySnapshot =
+          await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      if (querySnapshot.data() != null) {
+        List data = querySnapshot.data()['uploads'];
+        data.forEach((element) {
+          if (element['fileName'] == searchText) {
+            print("I am matched");
+            imageDetails = ImageDetails(
+              url: element['url'],
+              myFavourite: element['myFavourite'],
+              fileName: element['fileName'],
+              uploadedAt: element['uploadedAt']
+            );
+            }
+        });
+      }
+      return imageDetails;
+    } on FirebaseException catch (error) {
+      print(error);
+      throw (error);
+    } catch (err) {
+      print(err);
+      throw (err);
+    }
+  }
 }

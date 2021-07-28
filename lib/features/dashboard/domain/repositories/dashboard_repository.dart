@@ -8,4 +8,5 @@ abstract class DashboardRepository {
       String uploadImageTo, File fileToUpload, String fileName);
   Future<void> deleteImage(String deleteImageFrom, String url);
   Future<void> updateImageDetails(ImageDetails imageDetails) ;
+  Future<ImageDetails> searchImage(String searchText) ;
   }

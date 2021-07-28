@@ -1,5 +1,6 @@
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/domain/usecases/dashboard_usecases.dart';
+import 'package:barahi/features/dashboard/domain/usecases/search_image_details_use_case.dart';
 import 'package:barahi/features/dashboard/domain/usecases/update_image_details_use_case.dart';
 import 'package:bloc/bloc.dart';
 
@@ -12,6 +13,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final deleteImageUseCase = sl<DeleteImageUseCase>();
   final listImagesUseCase = sl<ListImagesUseCase>();
   final updateImageDetailsUseCase = sl<UpdateImageDetailsUseCase>();
+  final searchImageUseCase = sl<SearchImageUseCase>();
 
   DashboardBloc() : super(DashboardEmpty());
 
@@ -54,6 +56,18 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           .execute(event.imageDetails)
           .then((value) => print("success"));
       yield ImageDetailsUpdatedState();
+    }
+    if (event is SearchImage) {
+      yield DashboardLoading();
+      final failureOrImage = await searchImageUseCase.execute(event.searchText);
+      yield failureOrImage.fold(
+          (failure) => DashboardError(failure.failureMessage), (imageDetails) {
+        if (imageDetails != null) {
+          return DashboardLoaded([imageDetails]);
+        } else {
+          return ImageNotFoundState();
+        }
+      });
     }
   }
 }

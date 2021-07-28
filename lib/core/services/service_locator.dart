@@ -29,6 +29,7 @@ Future<void> init() async {
   sl.registerLazySingleton<UploadImageUseCase>(() => UploadImageUseCaseImpl());
   sl.registerLazySingleton<DeleteImageUseCase>(() => DeleteImageUseCaseImpl());
   sl.registerLazySingleton<UpdateImageDetailsUseCase>(() => UpdateImageDetailsUseCaseImpl());
+  sl.registerLazySingleton<SearchImageUseCase>(() => SearchImageUseCaseImpl());
 
   ///repositories
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());

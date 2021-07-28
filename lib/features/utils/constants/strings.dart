@@ -6,6 +6,7 @@ const String signUpButtonText = 'Sign Up';
 const String signInButtonText = 'Sign In';
 
 const String emailText = 'Email';
+const String searchByFileName = 'Search for file name';
 const String passwordText = 'Password';
 const String confirmPasswordText = 'Confirm Password';
 const String changeCityText = 'Change City';

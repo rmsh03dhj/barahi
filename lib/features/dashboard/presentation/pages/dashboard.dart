@@ -1,4 +1,6 @@
 import 'package:barahi/features/utils/constants/strings.dart';
+import 'package:barahi/features/utils/widgets/my_app_button.dart';
+import 'package:barahi/features/utils/widgets/my_app_form_builder_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/dashboard.dart';
@@ -13,62 +15,101 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashboardBloc, DashboardState>(
-        listener: (context, state) {
-      if (state is DashboardError) {
-        Scaffold.of(context)
-          ..showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: Colors.red,
-              duration: Duration(seconds: 5),
-            ),
-          );
-      }
-      if (state is ImageDeletedState) {
-        BlocProvider.of<DashboardBloc>(context)
-          ..add(ListImages(listImagesFrom: UPLOAD_IN));
-      }
-    }, builder: (context, state) {
-      return Scaffold(
-        body: BlocBuilder<DashboardBloc, DashboardState>(
-          builder: (context, state) {
-            if (state is DashboardLoaded) {
-              if (state.images.length != 0) {
-                return OrientationBuilder(
-                  builder: (context, orientation) {
-                    return SingleChildScrollView(
-                      child: GridView.builder(
-                          shrinkWrap: true,
-                          itemCount: state.images.length,
-                          physics: ClampingScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                orientation == Orientation.portrait ? 2 : 3,
-                            childAspectRatio: (5.5 / 7),
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child:
-                                  ImageTile(imageDetail: state.images[index]),
-                            );
-                          }),
-                    );
+      listener: (context, state) {
+        if (state is DashboardError) {
+          Scaffold.of(context)
+            ..showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 5),
+              ),
+            );
+        }
+        if (state is ImageDeletedState) {
+          BlocProvider.of<DashboardBloc>(context)
+            ..add(ListImages(listImagesFrom: UPLOAD_IN));
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.55,
+                        child: MyAppFormBuilderTextField(
+                          attribute: searchByFileName,
+                          enableSuggestions: false,
+                          autoCorrect: false,
+                          label: searchByFileName,
+                          keyboardType: TextInputType.text,
+                          onChanged: (val) {
+                            if (val.isEmpty) {
+                              BlocProvider.of<DashboardBloc>(context)
+                                  .add(ListImages());
+                            } else {
+                              BlocProvider.of<DashboardBloc>(context)
+                                  .add(SearchImage(searchText: val));
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: MyAppButton(
+                          text: "Search",
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                BlocBuilder<DashboardBloc, DashboardState>(
+                  builder: (context, state) {
+                    if (state is DashboardLoaded) {
+                      if (state.images.length != 0) {
+                        return OrientationBuilder(
+                            builder: (context, orientation) {
+                          return GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: state.images.length,
+                              physics: ClampingScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
+                                    orientation == Orientation.portrait ? 2 : 3,
+                                childAspectRatio: (5.5 / 7),
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: ImageTile(
+                                      imageDetail: state.images[index]),
+                                );
+                              });
+                        });
+                      } else {
+                        return Center(child: Text(noImages));
+                      }
+                    }
+                    if (state is DashboardLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return Center(child: Text(noImages));
+                    }
                   },
-                );
-              } else {
-                return Center(child: Text(noImages));
-              }
-            }
-            if (state is DashboardLoading) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return Center(child: Text(noImages));
-            }
-          },
-        ),
-      );
-    });
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

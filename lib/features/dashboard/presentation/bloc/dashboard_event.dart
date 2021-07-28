@@ -13,7 +13,7 @@ abstract class DashboardEvent extends Equatable {
 class ListImages extends DashboardEvent {
   final String listImagesFrom;
 
-  ListImages({@required this.listImagesFrom});
+  ListImages({this.listImagesFrom=UPLOAD_IN});
 
   @override
   String toString() => 'ListImages';
@@ -50,6 +50,15 @@ class UpdateImageDetails extends DashboardEvent {
 
   @override
   String toString() => 'UpdateImageDetails';
+}
+
+class SearchImage extends DashboardEvent {
+  final String searchText;
+
+  SearchImage({@required this.searchText});
+
+  @override
+  String toString() => 'SearchImage';
 }
 
 class UpdateMyFavourite extends DashboardEvent {

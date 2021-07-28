@@ -155,12 +155,6 @@ class _ImageViewerState extends State<ImageViewer> {
                   Container(
                     height: 16,
                   ),
-                  widget.imageViewerInput.imageDetail != null
-                      ? Text(widget.imageViewerInput.imageDetail.uploadedAt)
-                      : Container(),
-                  Container(
-                    height: 16,
-                  ),
                   BlocBuilder<DashboardBloc, DashboardState>(
                     builder: (context, state) {
                       return MyAppButtonFullWidth(
