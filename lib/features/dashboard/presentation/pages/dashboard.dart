@@ -1,6 +1,7 @@
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:barahi/features/utils/widgets/my_app_button.dart';
 import 'package:barahi/features/utils/widgets/my_app_form_builder_text_field.dart';
+import 'package:barahi/features/utils/widgets/my_app_search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/dashboard.dart';
@@ -12,6 +13,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController searchController = TextEditingController();
+  FocusNode searchFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashboardBloc, DashboardState>(
@@ -38,36 +47,19 @@ class _HomeState extends State<Home> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.55,
-                        child: MyAppFormBuilderTextField(
-                          attribute: searchByFileName,
-                          enableSuggestions: false,
-                          autoCorrect: false,
-                          label: searchByFileName,
-                          keyboardType: TextInputType.text,
-                          onChanged: (val) {
-                            if (val.isEmpty) {
-                              BlocProvider.of<DashboardBloc>(context)
-                                  .add(ListImages());
-                            } else {
-                              BlocProvider.of<DashboardBloc>(context)
-                                  .add(SearchImage(searchText: val));
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.35,
-                        child: MyAppButton(
-                          text: "Search",
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
+                  child: MyAppSearchField(
+                    hintText: searchByFileName,
+                    controller: searchController,
+                    focusNode: searchFocusNode,
+                    onChanged: (val) {
+                      if (val.isEmpty) {
+                        BlocProvider.of<DashboardBloc>(context)
+                            .add(ListImages());
+                      } else {
+                        BlocProvider.of<DashboardBloc>(context)
+                            .add(SearchImage(searchText: val));
+                      }
+                    },
                   ),
                 ),
                 BlocBuilder<DashboardBloc, DashboardState>(

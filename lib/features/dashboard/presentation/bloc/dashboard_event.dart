@@ -13,7 +13,7 @@ abstract class DashboardEvent extends Equatable {
 class ListImages extends DashboardEvent {
   final String listImagesFrom;
 
-  ListImages({this.listImagesFrom=UPLOAD_IN});
+  ListImages({this.listImagesFrom = UPLOAD_IN});
 
   @override
   String toString() => 'ListImages';
@@ -68,4 +68,29 @@ class UpdateMyFavourite extends DashboardEvent {
 
   @override
   String toString() => 'UpdateMyFavourite';
+}
+
+class SortByFileName extends DashboardEvent {
+  final bool ascending;
+
+  SortByFileName({this.ascending = true});
+
+  @override
+  String toString() => 'SortByFileName';
+}
+
+class SortByUploadedDate extends DashboardEvent {
+  final bool ascending;
+
+  SortByUploadedDate({this.ascending = true});
+
+  @override
+  String toString() => 'SortByUploadedDate';
+}class SortByMyFav extends DashboardEvent {
+  final bool ascending;
+
+  SortByMyFav({this.ascending = true});
+
+  @override
+  String toString() => 'SortByMyFav';
 }

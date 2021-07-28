@@ -8,14 +8,13 @@ import 'package:barahi/core/error/failure.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/core/usecases/base_use_case.dart';
 
-  abstract class UpdateImageDetailsUseCase
+abstract class UpdateImageDetailsUseCase
     implements BaseUseCase<bool, ImageDetails> {}
 
 class UpdateImageDetailsUseCaseImpl implements UpdateImageDetailsUseCase {
   final dashboardRepo = sl<DashboardRepository>();
   @override
-  Future<Either<Failure, bool>> execute(
-      ImageDetails imageDetails) async {
+  Future<Either<Failure, bool>> execute(ImageDetails imageDetails) async {
     try {
       await dashboardRepo.updateImageDetails(imageDetails);
       return Right(true);

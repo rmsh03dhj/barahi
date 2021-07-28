@@ -26,7 +26,7 @@ class _ImageTileState extends State<ImageTile> {
   void initState() {
     super.initState();
     isFav = widget.imageDetail.myFavourite;
-    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +44,8 @@ class _ImageTileState extends State<ImageTile> {
               errorWidget: (context, url, error) => Icon(Icons.access_alarms),
             ),
             Positioned(
-              top: 0,
-              right: 0,
+              top: 10,
+              right: 10,
               child: Container(
                 height: 32.0,
                 width: 32.0,
@@ -55,25 +55,25 @@ class _ImageTileState extends State<ImageTile> {
                     backgroundColor: Colors.white,
                     onPressed: () {
                       setState(() {
-                        isFav= !isFav;
+                        isFav = !isFav;
                       });
                       BlocProvider.of<DashboardBloc>(context).add(
                           UpdateMyFavourite(
-                              imageDetails:
-                                  widget.imageDetail.copyWith(myFavourite: isFav)));
+                              imageDetails: widget.imageDetail
+                                  .copyWith(myFavourite: isFav)));
                     },
                     child: Icon(
-                      Icons.share,
-                      color: isFav?Colors.red: Colors.black,
-                      size: 32,
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      color: isFav ? Colors.red : Colors.black,
+                      size: 36,
                     ),
                   ),
                 ),
               ),
             ),
             Positioned(
-              bottom: 0,
-              left: 0,
+              bottom: 10,
+              left: 10,
               child: Container(
                 height: 32.0,
                 width: 32.0,
@@ -88,7 +88,7 @@ class _ImageTileState extends State<ImageTile> {
                     },
                     child: Icon(
                       Icons.delete_forever,
-                      size: 32,
+                      size: 36,
                     ),
                   ),
                 ),

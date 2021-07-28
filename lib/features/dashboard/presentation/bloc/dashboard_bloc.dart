@@ -1,7 +1,5 @@
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/domain/usecases/dashboard_usecases.dart';
-import 'package:barahi/features/dashboard/domain/usecases/search_image_details_use_case.dart';
-import 'package:barahi/features/dashboard/domain/usecases/update_image_details_use_case.dart';
 import 'package:bloc/bloc.dart';
 
 import 'dashboard.dart';
@@ -14,6 +12,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final listImagesUseCase = sl<ListImagesUseCase>();
   final updateImageDetailsUseCase = sl<UpdateImageDetailsUseCase>();
   final searchImageUseCase = sl<SearchImageUseCase>();
+  final sortByDateUseCase = sl<SortImagesByDateUseCase>();
+  final sortByFileNameUseCase = sl<SortImagesByFileNameUseCase>();
+  final sortByMyFavUseCase = sl<SortImagesByMyFavUseCase>();
 
   DashboardBloc() : super(DashboardEmpty());
 
@@ -23,6 +24,27 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       yield DashboardLoading();
       final failureOrImages =
           await listImagesUseCase.execute(event.listImagesFrom);
+      yield failureOrImages.fold(
+          (failure) => DashboardError(failure.failureMessage),
+          (images) => DashboardLoaded(images));
+    }
+    if (event is SortByFileName) {
+      yield DashboardLoading();
+      final failureOrImages =
+          await sortByFileNameUseCase.execute(event.ascending);
+      yield failureOrImages.fold(
+          (failure) => DashboardError(failure.failureMessage),
+          (images) => DashboardLoaded(images));
+    }
+    if (event is SortByUploadedDate) {
+      yield DashboardLoading();
+      final failureOrImages = await sortByDateUseCase.execute(event.ascending);
+      yield failureOrImages.fold(
+          (failure) => DashboardError(failure.failureMessage),
+          (images) => DashboardLoaded(images));
+    } if (event is SortByMyFav) {
+      yield DashboardLoading();
+      final failureOrImages = await sortByMyFavUseCase.execute(event.ascending);
       yield failureOrImages.fold(
           (failure) => DashboardError(failure.failureMessage),
           (images) => DashboardLoaded(images));

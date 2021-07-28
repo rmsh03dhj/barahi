@@ -66,7 +66,7 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
         bucket: bucket,
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.camera_alt_outlined),
         onPressed: () {
           showOptionsDialog(context);
         },

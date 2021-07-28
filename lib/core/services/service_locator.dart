@@ -28,8 +28,15 @@ Future<void> init() async {
   sl.registerLazySingleton<ListImagesUseCase>(() => ListImagesUseCaseImpl());
   sl.registerLazySingleton<UploadImageUseCase>(() => UploadImageUseCaseImpl());
   sl.registerLazySingleton<DeleteImageUseCase>(() => DeleteImageUseCaseImpl());
-  sl.registerLazySingleton<UpdateImageDetailsUseCase>(() => UpdateImageDetailsUseCaseImpl());
+  sl.registerLazySingleton<UpdateImageDetailsUseCase>(
+      () => UpdateImageDetailsUseCaseImpl());
   sl.registerLazySingleton<SearchImageUseCase>(() => SearchImageUseCaseImpl());
+  sl.registerLazySingleton<SortImagesByDateUseCase>(
+      () => SortImagesByDateUseCaseImpl());
+  sl.registerLazySingleton<SortImagesByFileNameUseCase>(
+      () => SortImagesByFileNameUseCaseImpl());
+  sl.registerLazySingleton<SortImagesByMyFavUseCase>(
+      () => SortImagesByMyFavUseCaseImpl());
 
   ///repositories
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());

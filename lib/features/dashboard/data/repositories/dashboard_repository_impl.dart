@@ -31,6 +31,85 @@ class DashboardRepositoryImpl implements DashboardRepository {
     }
   }
 
+  Future<List<ImageDetails>> sortByFileName(bool ascending) async {
+    try {
+      List<ImageDetails> images = [];
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      final querySnapshot =
+          await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      if (querySnapshot.data() != null) {
+        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+          return ImageDetails.fromMap(item);
+        }).toList();
+      }
+      if (ascending) {
+        images.sort((a, b) => a.fileName.compareTo(b.fileName));
+      } else {
+        images.sort((b, a) => a.fileName.compareTo(b.fileName));
+      }
+      return images;
+    } catch (e) {
+      print(e);
+      throw (e);
+    }
+  }
+
+  Future<List<ImageDetails>> sortByMyFav(bool ascending) async {
+    try {
+      List<ImageDetails> images = [];
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      final querySnapshot =
+          await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      if (querySnapshot.data() != null) {
+        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+          return ImageDetails.fromMap(item);
+        }).toList();
+      }
+      if (ascending) {
+        images.sort((a, b) {
+          if(b.myFavourite) {
+            return 1;
+          }
+          return -1;
+        });
+      } else {
+        images.sort((a, b) {
+          if(a.myFavourite) {
+            return 1;
+          }
+          return -1;
+        });
+      }
+      return images;
+    } catch (e) {
+      print(e);
+      throw (e);
+    }
+  }
+
+  Future<List<ImageDetails>> sortByDate(bool ascending) async {
+    try {
+      List<ImageDetails> images = [];
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      final querySnapshot =
+          await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      if (querySnapshot.data() != null) {
+        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+          return ImageDetails.fromMap(item);
+        }).toList();
+      }
+      if (ascending) {
+        images.sort((a, b) => a.uploadedAt.compareTo(b.uploadedAt));
+      } else {
+        images.sort((b, a) => a.uploadedAt.compareTo(b.uploadedAt));
+      }
+      return images;
+    } catch (e) {
+      print(e);
+      throw (e);
+    }
+  }
+
   Future<void> uploadImage(
       String uploadImageTo, File fileToUpload, String fileName) async {
     try {
@@ -108,9 +187,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
           if (element['url'] != imageDetails.url) {
             updatedDetails.add(element);
           } else {
-            updatedDetails.add( {
+            updatedDetails.add({
               "uploaded_at":
-              DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
+                  DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
               "fileName": imageDetails.fileName,
               "url": imageDetails.url,
               "myFavourite": imageDetails.myFavourite,
@@ -144,12 +223,11 @@ class DashboardRepositoryImpl implements DashboardRepository {
           if (element['fileName'] == searchText) {
             print("I am matched");
             imageDetails = ImageDetails(
-              url: element['url'],
-              myFavourite: element['myFavourite'],
-              fileName: element['fileName'],
-              uploadedAt: element['uploadedAt']
-            );
-            }
+                url: element['url'],
+                myFavourite: element['myFavourite'],
+                fileName: element['fileName'],
+                uploadedAt: element['uploadedAt']);
+          }
         });
       }
       return imageDetails;

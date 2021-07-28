@@ -7,17 +7,18 @@ import 'package:dartz/dartz.dart';
 import 'package:barahi/core/error/failure.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/core/usecases/base_use_case.dart';
+import 'package:flutter/foundation.dart';
 
-abstract class SearchImageUseCase implements BaseUseCase<ImageDetails, String> {
-}
+abstract class SortImagesByMyFavUseCase
+    implements BaseUseCase<List<ImageDetails>, bool> {}
 
-class SearchImageUseCaseImpl implements SearchImageUseCase {
+class SortImagesByMyFavUseCaseImpl implements SortImagesByMyFavUseCase {
   final dashboardRepo = sl<DashboardRepository>();
   @override
-  Future<Either<Failure, ImageDetails>> execute(String searchText) async {
+  Future<Either<Failure, List<ImageDetails>>> execute(bool ascending) async {
     try {
-      final imageDetails = await dashboardRepo.searchImage(searchText);
-      return Right(imageDetails);
+      final result = await dashboardRepo.sortByMyFav(ascending);
+      return Right(result);
     } catch (e) {
       return Left(GeneralFailure(failureMessage: e.toString()));
     }
