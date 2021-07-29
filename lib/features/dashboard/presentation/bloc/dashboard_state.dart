@@ -19,6 +19,12 @@ class DashboardLoaded extends DashboardState {
   DashboardLoaded(this.images);
 }
 
+class SharedImageLoaded extends DashboardState {
+  final List<ImageDetails> images;
+
+  SharedImageLoaded(this.images);
+}
+
 class DashboardError extends DashboardState {
   final String errorMessage;
 

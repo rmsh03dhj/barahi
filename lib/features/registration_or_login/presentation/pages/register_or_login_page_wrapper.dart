@@ -192,7 +192,13 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                               keyboardType: TextInputType.text,
                               focusNode: _passwordFocusNode,
                               onFieldSubmitted: (_) {
-                                FocusScope.of(context).unfocus();
+                                if (_signIn) {
+                                  FocusScope.of(context).unfocus();
+                                  onPressed();
+                                } else {
+                                  fieldFocusChange(context, _emailFocusNode,
+                                      _passwordFocusNode);
+                                }
                               },
                               onChanged: (val) {
                                 setState(() {
@@ -254,6 +260,7 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                   focusNode: _confirmPasswordFocusNode,
                                   onFieldSubmitted: (_) {
                                     FocusScope.of(context).unfocus();
+                                    onPressed();
                                   },
                                   onChanged: (val) {
                                     setState(() {
@@ -283,25 +290,7 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                       state is SignUpSuccessState)
                                   ? true
                                   : false,
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  if (_signIn) {
-                                    BlocProvider.of<RegistrationOrLoginBloc>(
-                                            context)
-                                        .add(SignInPressed(
-                                      _emailController.text,
-                                      _passwordController.text,
-                                    ));
-                                  } else {
-                                    BlocProvider.of<RegistrationOrLoginBloc>(
-                                            context)
-                                        .add(SignUpPressed(
-                                      _emailController.text,
-                                      _passwordController.text,
-                                    ));
-                                  }
-                                }
-                              },
+                              onPressed: onPressed,
                             );
                           }),
                           Container(
@@ -339,6 +328,22 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
         );
       }),
     ));
+  }
+
+  void onPressed() {
+    if (_formKey.currentState.validate()) {
+      if (_signIn) {
+        BlocProvider.of<RegistrationOrLoginBloc>(context).add(SignInPressed(
+          _emailController.text,
+          _passwordController.text,
+        ));
+      } else {
+        BlocProvider.of<RegistrationOrLoginBloc>(context).add(SignUpPressed(
+          _emailController.text,
+          _passwordController.text,
+        ));
+      }
+    }
   }
 
   void dispose() {

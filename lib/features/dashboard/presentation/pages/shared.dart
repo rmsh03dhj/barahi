@@ -15,7 +15,7 @@ class _SharedImagesState extends State<SharedImages> {
     return Scaffold(
       body: BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
-          if (state is DashboardLoaded) {
+          if (state is SharedImageLoaded) {
             if (state.images.length != 0) {
               return SingleChildScrollView(
                 child: GridView.builder(

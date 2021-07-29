@@ -13,7 +13,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
   final storage = FirebaseStorage.instance;
   final fsInstance = FirebaseFirestore.instance;
 
-  Future<List<ImageDetails>> loadImages(String from) async {
+  Future<List<ImageDetails>> loadImages() async {
     try {
       List<ImageDetails> images = [];
       final firebaseUser = FirebaseAuth.instance.currentUser;

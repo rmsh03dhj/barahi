@@ -19,6 +19,15 @@ class ListImages extends DashboardEvent {
   String toString() => 'ListImages';
 }
 
+class ListSharedImages extends DashboardEvent {
+  final String listImagesFrom;
+
+  ListSharedImages({this.listImagesFrom = UPLOAD_IN});
+
+  @override
+  String toString() => 'ListSharedImages';
+}
+
 class UploadImage extends DashboardEvent {
   final File file;
   final String fileName;

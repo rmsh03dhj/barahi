@@ -23,10 +23,17 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     if (event is ListImages) {
       yield DashboardLoading();
       final failureOrImages =
-          await listImagesUseCase.execute(event.listImagesFrom);
+          await listImagesUseCase.execute(false);
       yield failureOrImages.fold(
           (failure) => DashboardError(failure.failureMessage),
           (images) => DashboardLoaded(images));
+    } if (event is ListSharedImages) {
+      yield DashboardLoading();
+      final failureOrImages =
+          await listImagesUseCase.execute(true);
+      yield failureOrImages.fold(
+          (failure) => DashboardError(failure.failureMessage),
+          (images) => SharedImageLoaded(images));
     }
     if (event is SortByFileName) {
       yield DashboardLoading();
