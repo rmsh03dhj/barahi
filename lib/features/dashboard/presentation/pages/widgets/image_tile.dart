@@ -1,9 +1,8 @@
-import 'package:barahi/core/routes/weather_app_routes.dart';
+import 'package:barahi/core/routes/my_app_routes.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
 import 'package:barahi/features/dashboard/presentation/pages/widgets/image_viewer.dart';
-import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

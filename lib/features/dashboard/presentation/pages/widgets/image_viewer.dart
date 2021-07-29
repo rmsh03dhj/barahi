@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:barahi/core/routes/weather_app_routes.dart';
+import 'package:barahi/core/routes/my_app_routes.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/core/services/service_locator.dart';
+import 'package:barahi/features/utils/widgets/my_app_button.dart';
 import 'package:intl/intl.dart';
 import 'package:barahi/features/dashboard/domain/entities/image_details.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:barahi/features/utils/validators.dart';
-import 'package:barahi/features/utils/widgets/my_app_button_full_width.dart';
 import 'package:barahi/features/utils/widgets/my_app_form_builder_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -124,42 +124,58 @@ class _ImageViewerState extends State<ImageViewer> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(32),
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 32),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: MyAppFormBuilderTextField(
-                      attribute: fileName,
-                      controller: fileNameController,
-                      enableSuggestions: false,
-                      autoCorrect: false,
-                      validators: [Validators.required()],
-                      label: fileName,
-                      keyboardType: TextInputType.text,
-                      focusNode: fileNameFocusNode,
-                      onChanged: (val) {
-                        setState(() {
-                          _formKey.currentState.fields[emailText].currentState.validate();
-                        });
-                      },
-                      onFieldSubmitted: (_) {
-                        submit();
-                      },
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).orientation == Orientation.landscape
+                              ? MediaQuery.of(context).size.width * 0.75
+                              : MediaQuery.of(context).size.width * 0.6,
+                          child: MyAppFormBuilderTextField(
+                            attribute: fileName,
+                            controller: fileNameController,
+                            enableSuggestions: false,
+                            autoCorrect: false,
+                            validators: [Validators.required()],
+                            label: fileName,
+                            keyboardType: TextInputType.text,
+                            focusNode: fileNameFocusNode,
+                            onChanged: (val) {
+                              setState(() {
+                                _formKey.currentState.fields[emailText].currentState.validate();
+                              });
+                            },
+                            onFieldSubmitted: (_) {
+                              submit();
+                            },
+                          ),
+                        ),
+                      ),
+                      BlocBuilder<DashboardBloc, DashboardState>(
+                        builder: (context, state) {
+                          return SizedBox(
+                            width: MediaQuery.of(context).orientation == Orientation.landscape
+                                ? MediaQuery.of(context).size.width * 0.2
+                                : MediaQuery.of(context).size.width * 0.3,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: MyAppButton(
+                                  text: saveButtonText,
+                                  showCircularProgressIndicator:
+                                      (state is DashboardLoading) ? true : false,
+                                  onPressed: submit),
+                            ),
+                          );
+                        },
+                      )
+                    ],
                   ),
-                  Container(
-                    height: 16,
-                  ),
-                  BlocBuilder<DashboardBloc, DashboardState>(
-                    builder: (context, state) {
-                      return MyAppButtonFullWidth(
-                          text: saveButtonText,
-                          showCircularProgressIndicator: (state is DashboardLoading) ? true : false,
-                          onPressed: submit);
-                    },
-                  )
                 ],
               ),
             )

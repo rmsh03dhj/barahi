@@ -1,16 +1,25 @@
-# barahi
+# Photo Viewer App
 
-A new Flutter project.
+This Photo Viewer is developed using Flutter Framework. I have followed clean code architecture, used [flutter bloc](https://pub.dev/packages/flutter_bloc) for state management and [dartz](https://pub.dev/packages/dartz) which makes error handling easier.
 
-## Getting Started
+This app basically has 3 screens namely splash screen, login or sign up screen and dashboard screen to display images.
 
-This project is a starting point for a Flutter application.
+To authenticate user, I have used [firebase authenticaton](https://pub.dev/packages/firebase_auth). Once the user is authenticated, whenever he opens the app, he will be directly taken to dashboard screen after splash srcreen.
+To store, images, I have used [firebase storage](https://pub.dev/packages/firebase_storage) and to operate with data related to image, like uploaded at, file name, favourite, etc, I have use [cloud firestore](https://pub.dev/packages/cloud_firestore).
 
-A few resources to get you started if this is your first Flutter project:
+In the app user can
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- sign up, sign in or logout. (email and password only)
+- upload image both from camera and photo gallery and delete as well.
+- rename image file name at any time
+- add image to my favourite or remove from my favourite
+- share image
+- rotate or zoom image
+- sort images by file name, favourite and uploaded date.
+- responsive to both landscape and potrait modes.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For project demo, I have attached a video below.
+
+<p align="center">
+<img src="demo.gif" width="220" height="450"/>
+</p>

@@ -1,7 +1,7 @@
+import 'package:barahi/core/routes/my_app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:barahi/core/routes/weather_app_routes.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
@@ -73,11 +73,11 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
       }
       if (state is SignUpSuccessState) {
         BlocProvider.of<DashboardBloc>(context)..add(ListImages());
-        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard, arguments: state.user);
+        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
       }
       if (state is SignInSuccessState) {
         BlocProvider.of<DashboardBloc>(context)..add(ListImages());
-        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard, arguments: state.user);
+        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
       }
     }, child: SingleChildScrollView(
       child:

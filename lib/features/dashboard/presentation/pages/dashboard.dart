@@ -69,7 +69,8 @@ class _HomeState extends State<Home> {
                               physics: ClampingScrollPhysics(),
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-                                childAspectRatio: (10 / 9),
+                                childAspectRatio:
+                                    orientation == Orientation.portrait ? (10 / 9) : (3 / 4),
                               ),
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
