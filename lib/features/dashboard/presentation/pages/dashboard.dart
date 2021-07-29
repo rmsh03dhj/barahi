@@ -1,6 +1,4 @@
 import 'package:barahi/features/utils/constants/strings.dart';
-import 'package:barahi/features/utils/widgets/my_app_button.dart';
-import 'package:barahi/features/utils/widgets/my_app_form_builder_text_field.dart';
 import 'package:barahi/features/utils/widgets/my_app_search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,8 +34,7 @@ class _HomeState extends State<Home> {
             );
         }
         if (state is ImageDeletedState) {
-          BlocProvider.of<DashboardBloc>(context)
-            ..add(ListImages(listImagesFrom: UPLOAD_IN));
+          BlocProvider.of<DashboardBloc>(context)..add(ListImages());
         }
       },
       builder: (context, state) {
@@ -53,38 +50,31 @@ class _HomeState extends State<Home> {
                     focusNode: searchFocusNode,
                     onChanged: (val) {
                       print(val);
-                      if (val.isEmpty ) {
-                        BlocProvider.of<DashboardBloc>(context)
-                            .add(ListImages());
+                      if (val.isEmpty) {
+                        BlocProvider.of<DashboardBloc>(context).add(ListImages());
                       } else {
-                        BlocProvider.of<DashboardBloc>(context)
-                            .add(SearchImage(searchText: val));
+                        BlocProvider.of<DashboardBloc>(context).add(SearchImage(searchText: val));
                       }
                     },
-
                   ),
                 ),
                 BlocBuilder<DashboardBloc, DashboardState>(
                   builder: (context, state) {
                     if (state is DashboardLoaded) {
                       if (state.images.length != 0) {
-                        return OrientationBuilder(
-                            builder: (context, orientation) {
+                        return OrientationBuilder(builder: (context, orientation) {
                           return GridView.builder(
                               shrinkWrap: true,
                               itemCount: state.images.length,
                               physics: ClampingScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount:
-                                    orientation == Orientation.portrait ? 2 : 3,
-                                childAspectRatio: (5.5 / 7),
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
+                                childAspectRatio: (10 / 9),
                               ),
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(16.0),
-                                  child: ImageTile(
-                                      imageDetail: state.images[index]),
+                                  child: ImageTile(imageDetail: state.images[index]),
                                 );
                               });
                         });

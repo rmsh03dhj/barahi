@@ -11,18 +11,14 @@ abstract class DashboardEvent extends Equatable {
 }
 
 class ListImages extends DashboardEvent {
-  final String listImagesFrom;
-
-  ListImages({this.listImagesFrom = UPLOAD_IN});
+  ListImages();
 
   @override
   String toString() => 'ListImages';
 }
 
 class ListSharedImages extends DashboardEvent {
-  final String listImagesFrom;
-
-  ListSharedImages({this.listImagesFrom = UPLOAD_IN});
+  ListSharedImages();
 
   @override
   String toString() => 'ListSharedImages';
@@ -31,12 +27,8 @@ class ListSharedImages extends DashboardEvent {
 class UploadImage extends DashboardEvent {
   final File file;
   final String fileName;
-  final String uploadImageTo;
 
-  UploadImage(
-      {@required this.file,
-      @required this.fileName,
-      this.uploadImageTo = UPLOAD_IN});
+  UploadImage({@required this.file, @required this.fileName});
 
   @override
   String toString() => 'UploadImage';
@@ -44,9 +36,8 @@ class UploadImage extends DashboardEvent {
 
 class DeleteImage extends DashboardEvent {
   final ImageDetails imageDetails;
-  final String deleteImageFrom;
 
-  DeleteImage({@required this.imageDetails, @required this.deleteImageFrom});
+  DeleteImage({@required this.imageDetails});
 
   @override
   String toString() => 'DeleteImage';
@@ -77,7 +68,9 @@ class UpdateMyFavourite extends DashboardEvent {
 
   @override
   String toString() => 'UpdateMyFavourite';
-}class ShareImage extends DashboardEvent {
+}
+
+class ShareImage extends DashboardEvent {
   final ImageDetails imageDetails;
 
   ShareImage({@required this.imageDetails});
@@ -102,7 +95,9 @@ class SortByUploadedDate extends DashboardEvent {
 
   @override
   String toString() => 'SortByUploadedDate';
-}class SortByMyFav extends DashboardEvent {
+}
+
+class SortByMyFav extends DashboardEvent {
   final bool ascending;
 
   SortByMyFav({this.ascending = true});

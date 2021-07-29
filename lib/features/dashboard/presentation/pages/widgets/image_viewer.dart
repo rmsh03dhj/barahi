@@ -49,8 +49,7 @@ class _ImageViewerState extends State<ImageViewer> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DashboardBloc, DashboardState>(
-        listener: (context, state) {
+    return BlocConsumer<DashboardBloc, DashboardState>(listener: (context, state) {
       if (state is DashboardError) {
         Scaffold.of(context)
           ..showSnackBar(
@@ -62,8 +61,7 @@ class _ImageViewerState extends State<ImageViewer> {
           );
       }
       if (state is ImageUploadedState || state is ImageDetailsUpdatedState) {
-        BlocProvider.of<DashboardBloc>(context)
-          ..add(ListImages(listImagesFrom: UPLOAD_IN));
+        BlocProvider.of<DashboardBloc>(context)..add(ListImages());
         _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
       }
     }, builder: (context, state) {
@@ -87,9 +85,9 @@ class _ImageViewerState extends State<ImageViewer> {
         body: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.6,
                 child: ClipRect(
                   child: widget.imageViewerInput.localImage != null
                       ? PhotoView(
@@ -143,8 +141,7 @@ class _ImageViewerState extends State<ImageViewer> {
                       focusNode: fileNameFocusNode,
                       onChanged: (val) {
                         setState(() {
-                          _formKey.currentState.fields[emailText].currentState
-                              .validate();
+                          _formKey.currentState.fields[emailText].currentState.validate();
                         });
                       },
                       onFieldSubmitted: (_) {
@@ -159,8 +156,7 @@ class _ImageViewerState extends State<ImageViewer> {
                     builder: (context, state) {
                       return MyAppButtonFullWidth(
                           text: saveButtonText,
-                          showCircularProgressIndicator:
-                              (state is DashboardLoading) ? true : false,
+                          showCircularProgressIndicator: (state is DashboardLoading) ? true : false,
                           onPressed: submit);
                     },
                   )
@@ -183,8 +179,8 @@ class _ImageViewerState extends State<ImageViewer> {
       );
     } else {
       BlocProvider.of<DashboardBloc>(context).add(UpdateImageDetails(
-          imageDetails: widget.imageViewerInput.imageDetail
-              .copyWith(fileName: fileNameController.text)));
+          imageDetails:
+              widget.imageViewerInput.imageDetail.copyWith(fileName: fileNameController.text)));
     }
   }
 }

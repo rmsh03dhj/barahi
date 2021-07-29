@@ -9,8 +9,7 @@ import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/core/usecases/base_use_case.dart';
 import 'package:flutter/foundation.dart';
 
-abstract class SortImagesByMyFavUseCase
-    implements BaseUseCase<List<ImageDetails>, bool> {}
+abstract class SortImagesByMyFavUseCase implements BaseUseCase<List<ImageDetails>, bool> {}
 
 class SortImagesByMyFavUseCaseImpl implements SortImagesByMyFavUseCase {
   final dashboardRepo = sl<DashboardRepository>();

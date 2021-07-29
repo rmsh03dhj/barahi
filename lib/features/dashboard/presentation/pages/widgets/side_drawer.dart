@@ -54,8 +54,7 @@ class SideDrawer extends StatelessWidget {
             title: Text(fileName),
             leading: Icon(FontAwesomeIcons.sortAlphaDownAlt),
             onTap: () {
-              BlocProvider.of<DashboardBloc>(context)
-                ..add(SortByFileName(ascending: false));
+              BlocProvider.of<DashboardBloc>(context)..add(SortByFileName(ascending: false));
               Navigator.pop(context);
             },
           ),
@@ -63,8 +62,7 @@ class SideDrawer extends StatelessWidget {
             title: Text(uploadedAt),
             leading: Icon(FontAwesomeIcons.sortNumericDown),
             onTap: () {
-              BlocProvider.of<DashboardBloc>(context)
-                ..add(SortByUploadedDate());
+              BlocProvider.of<DashboardBloc>(context)..add(SortByUploadedDate());
               Navigator.pop(context);
             },
           ),
@@ -72,25 +70,23 @@ class SideDrawer extends StatelessWidget {
             title: Text(uploadedAt),
             leading: Icon(FontAwesomeIcons.sortNumericDownAlt),
             onTap: () {
-              BlocProvider.of<DashboardBloc>(context)
-                ..add(SortByUploadedDate(ascending: false));
-              Navigator.pop(context);
-            },
-          ), ListTile(
-            title: Text(myFav),
-            leading: Icon(FontAwesomeIcons.sortNumericDown),
-            onTap: () {
-              BlocProvider.of<DashboardBloc>(context)
-                ..add(SortByMyFav());
+              BlocProvider.of<DashboardBloc>(context)..add(SortByUploadedDate(ascending: false));
               Navigator.pop(context);
             },
           ),
           ListTile(
             title: Text(myFav),
-            leading: Icon(FontAwesomeIcons.sortNumericDownAlt),
+            leading: Icon(FontAwesomeIcons.sortDown),
             onTap: () {
-              BlocProvider.of<DashboardBloc>(context)
-                ..add(SortByMyFav(ascending: false));
+              BlocProvider.of<DashboardBloc>(context)..add(SortByMyFav());
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text(myFav),
+            leading: Icon(FontAwesomeIcons.sortUp),
+            onTap: () {
+              BlocProvider.of<DashboardBloc>(context)..add(SortByMyFav(ascending: false));
               Navigator.pop(context);
             },
           ),
@@ -99,8 +95,7 @@ class SideDrawer extends StatelessWidget {
             leading: Icon(Icons.logout),
             onTap: () {
               BlocProvider.of<AppStartBloc>(context)..add(LoggedOut());
-              sl<NavigationService>()
-                  .navigateToAndRemoveUntil(MyAppRoutes.signUpOrSignIn);
+              sl<NavigationService>().navigateToAndRemoveUntil(MyAppRoutes.signUpOrSignIn);
             },
           ),
         ]),

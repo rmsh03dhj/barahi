@@ -25,10 +25,8 @@ class AppStartBloc extends Bloc<AppStartEvent, AppStartState> {
   }
 
   Stream<AppStartState> _mapCheckForAuthenticationToState() async* {
-    final failureOrUser =
-        await checkForAuthenticationUseCase.execute(NoParams());
-    yield failureOrUser.fold(
-        (failure) => Unauthenticated(), (user) => Authenticated(user));
+    final failureOrUser = await checkForAuthenticationUseCase.execute(NoParams());
+    yield failureOrUser.fold((failure) => Unauthenticated(), (user) => Authenticated(user));
   }
 
   Stream<AppStartState> _mapLoggedOutToState() async* {

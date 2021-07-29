@@ -49,12 +49,10 @@ class _MyAppSearchFieldState extends State<MyAppSearchField> {
         prefixIcon: Icon(Icons.search, size: 24, color: Colors.tealAccent),
         suffixIcon: widget.controller.text.isNotEmpty
             ? IconButton(
-                icon: Icon(FontAwesomeIcons.timesCircle,
-                    color: Colors.tealAccent),
+                icon: Icon(FontAwesomeIcons.timesCircle, color: Colors.tealAccent),
                 onPressed: () {
                   setState(() {
-                    BlocProvider.of<DashboardBloc>(context)
-                        .add(ListImages());
+                    BlocProvider.of<DashboardBloc>(context).add(ListImages());
                     widget.controller.clear();
                   });
                 },

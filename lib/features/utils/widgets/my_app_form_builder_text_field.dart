@@ -53,8 +53,7 @@ class MyAppFormBuilderTextField extends StatefulWidget {
       this.textCapitalization = TextCapitalization.none});
 
   @override
-  _MyAppFormBuilderTextFieldState createState() =>
-      _MyAppFormBuilderTextFieldState();
+  _MyAppFormBuilderTextFieldState createState() => _MyAppFormBuilderTextFieldState();
 }
 
 class _MyAppFormBuilderTextFieldState extends State<MyAppFormBuilderTextField> {
@@ -85,15 +84,12 @@ class _MyAppFormBuilderTextFieldState extends State<MyAppFormBuilderTextField> {
             ),
             prefixIcon: widget.prefixIcon,
             labelText: widget.label,
-            labelStyle: TextStyle(
-                color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w500),
-            border: new OutlineInputBorder(
-                borderSide: new BorderSide(color: Colors.grey)),
+            labelStyle: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w500),
+            border: new OutlineInputBorder(borderSide: new BorderSide(color: Colors.grey)),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
                 borderSide: BorderSide(color: Theme.of(context).accentColor)),
-            focusedErrorBorder:
-                OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+            focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
             errorStyle: TextStyle(
               color: Colors.red,
             ),

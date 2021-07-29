@@ -8,8 +8,7 @@ import 'package:barahi/core/error/failure.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/core/usecases/base_use_case.dart';
 
-abstract class SearchImageUseCase implements BaseUseCase<ImageDetails, String> {
-}
+abstract class SearchImageUseCase implements BaseUseCase<ImageDetails, String> {}
 
 class SearchImageUseCaseImpl implements SearchImageUseCase {
   final dashboardRepo = sl<DashboardRepository>();

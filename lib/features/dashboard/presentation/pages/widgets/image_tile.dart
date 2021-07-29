@@ -35,21 +35,26 @@ class _ImageTileState extends State<ImageTile> {
           arguments: ImageViewerInput(imageDetail: widget.imageDetail)),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.3,
-        height: MediaQuery.of(context).size.height * 0.3,
-        color:Colors.red,
+        height: MediaQuery.of(context).size.width * 0.3,
         child: Stack(
           children: [
-            CachedNetworkImage(
-              imageUrl: widget.imageDetail.url,
-              fit: BoxFit.cover,
-              errorWidget: (context, url, error) => Icon(Icons.access_alarms),
+            Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.width * 0.5,
+                child: CachedNetworkImage(
+                  imageUrl: widget.imageDetail.url,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) => Icon(Icons.access_alarms),
+                ),
+              ),
             ),
             Positioned(
               top: 10,
-              right: 10,
+              right: 5,
               child: Container(
-                height: 32.0,
-                width: 32.0,
+                height: 28.0,
+                width: 28.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     heroTag: null,
@@ -58,10 +63,8 @@ class _ImageTileState extends State<ImageTile> {
                       setState(() {
                         isFav = !isFav;
                       });
-                      BlocProvider.of<DashboardBloc>(context).add(
-                          UpdateMyFavourite(
-                              imageDetails: widget.imageDetail
-                                  .copyWith(myFavourite: isFav)));
+                      BlocProvider.of<DashboardBloc>(context).add(UpdateMyFavourite(
+                          imageDetails: widget.imageDetail.copyWith(myFavourite: isFav)));
                     },
                     child: Icon(
                       isFav ? Icons.favorite : Icons.favorite_border,
@@ -72,20 +75,21 @@ class _ImageTileState extends State<ImageTile> {
                 ),
               ),
             ),
+            widget.imageDetail.shared
+                ? Container():
             Positioned(
               bottom: 10,
-              left: 10,
+              right: 5,
               child: Container(
-                height: 32.0,
-                width: 32.0,
+                height: 28.0,
+                width: 28.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     heroTag: null,
                     backgroundColor: Colors.white,
                     onPressed: () {
-                      BlocProvider.of<DashboardBloc>(context).add(DeleteImage(
-                          imageDetails: widget.imageDetail,
-                          deleteImageFrom: UPLOAD_IN));
+                      BlocProvider.of<DashboardBloc>(context)
+                          .add(DeleteImage(imageDetails: widget.imageDetail));
                     },
                     child: Icon(
                       Icons.delete_forever,
@@ -95,30 +99,30 @@ class _ImageTileState extends State<ImageTile> {
                 ),
               ),
             ),
-            widget.imageDetail.shared?Container():
-            Positioned(
-              bottom: 10,
-              right: 10,
-              child: Container(
-                height: 32.0,
-                width: 32.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    heroTag: null,
-                    backgroundColor: Colors.white,
-                    onPressed: () {
-                      BlocProvider.of<DashboardBloc>(context).add(
-                          ShareImage(
-                              imageDetails: widget.imageDetail));
-                    },
-                    child: Icon(
-                      Icons.share,
-                      size: 36,
+            widget.imageDetail.shared
+                ? Container()
+                : Positioned(
+                    top: 10,
+                    right: 40,
+                    child: Container(
+                      height: 28.0,
+                      width: 28.0,
+                      child: FittedBox(
+                        child: FloatingActionButton(
+                          heroTag: null,
+                          backgroundColor: Colors.white,
+                          onPressed: () {
+                            BlocProvider.of<DashboardBloc>(context)
+                                .add(ShareImage(imageDetails: widget.imageDetail));
+                          },
+                          child: Icon(
+                            Icons.share,
+                            size: 36,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

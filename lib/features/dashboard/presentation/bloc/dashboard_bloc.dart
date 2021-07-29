@@ -52,8 +52,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
     if (event is DeleteImage) {
       yield DashboardLoading();
-      final failureOrUser =
-          await deleteImageUseCase.execute(DeleteImageInputParams(url: event.imageDetails.url));
+      final failureOrUser = await deleteImageUseCase.execute(event.imageDetails.url);
       yield failureOrUser.fold(
           (failure) => DashboardError(failure.failureMessage), (user) => ImageDeletedState());
     }

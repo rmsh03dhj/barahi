@@ -26,8 +26,7 @@ class RegistrationOrLoginPage extends StatefulWidget {
   RegistrationOrLoginPage();
 
   @override
-  _RegistrationOrLoginPageState createState() =>
-      _RegistrationOrLoginPageState();
+  _RegistrationOrLoginPageState createState() => _RegistrationOrLoginPageState();
 }
 
 class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
@@ -73,20 +72,16 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
           );
       }
       if (state is SignUpSuccessState) {
-        BlocProvider.of<DashboardBloc>(context)
-          ..add(ListImages(listImagesFrom: UPLOAD_IN));
-        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
-            arguments: state.user);
+        BlocProvider.of<DashboardBloc>(context)..add(ListImages());
+        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard, arguments: state.user);
       }
       if (state is SignInSuccessState) {
-        BlocProvider.of<DashboardBloc>(context)
-          ..add(ListImages(listImagesFrom: UPLOAD_IN));
-        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
-            arguments: state.user);
+        BlocProvider.of<DashboardBloc>(context)..add(ListImages());
+        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard, arguments: state.user);
       }
     }, child: SingleChildScrollView(
-      child: BlocBuilder<RegistrationOrLoginBloc, RegistrationOrLoginState>(
-          builder: (context, state) {
+      child:
+          BlocBuilder<RegistrationOrLoginBloc, RegistrationOrLoginState>(builder: (context, state) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,24 +121,18 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                               controller: _emailController,
                               enableSuggestions: false,
                               autoCorrect: false,
-                              validators: [
-                                Validators.required(),
-                                Validators.emailValidator()
-                              ],
+                              validators: [Validators.required(), Validators.emailValidator()],
                               label: emailText,
                               prefixIcon: Icon(Icons.person),
                               keyboardType: TextInputType.emailAddress,
                               focusNode: _emailFocusNode,
                               onChanged: (val) {
                                 setState(() {
-                                  _formKey.currentState.fields[emailText]
-                                      .currentState
-                                      .validate();
+                                  _formKey.currentState.fields[emailText].currentState.validate();
                                 });
                               },
                               onFieldSubmitted: (_) {
-                                fieldFocusChange(context, _emailFocusNode,
-                                    _passwordFocusNode);
+                                fieldFocusChange(context, _emailFocusNode, _passwordFocusNode);
                               },
                             ),
                           ),
@@ -157,24 +146,19 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                               decoration: InputDecoration(
                                 labelText: passwordText,
                                 border: new OutlineInputBorder(
-                                    borderSide:
-                                        new BorderSide(color: Colors.grey)),
+                                    borderSide: new BorderSide(color: Colors.grey)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).accentColor)),
-                                focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red)),
+                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Theme.of(context).accentColor)),
+                                focusedErrorBorder:
+                                    OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
                                 errorStyle: TextStyle(
                                   color: Colors.red,
                                 ),
                                 prefixIcon: Icon(Icons.lock),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    _passwordVisible
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
+                                    _passwordVisible ? Icons.visibility_off : Icons.visibility,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -196,14 +180,12 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                   FocusScope.of(context).unfocus();
                                   onPressed();
                                 } else {
-                                  fieldFocusChange(context, _emailFocusNode,
-                                      _passwordFocusNode);
+                                  fieldFocusChange(context, _emailFocusNode, _passwordFocusNode);
                                 }
                               },
                               onChanged: (val) {
                                 setState(() {
-                                  _formKey.currentState.fields[passwordText]
-                                      .currentState
+                                  _formKey.currentState.fields[passwordText].currentState
                                       .validate();
                                 });
                               },
@@ -220,17 +202,13 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                   decoration: InputDecoration(
                                     labelText: confirmPasswordText,
                                     border: new OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: Colors.grey)),
+                                        borderSide: new BorderSide(color: Colors.grey)),
                                     focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0)),
-                                        borderSide: BorderSide(
-                                            color:
-                                                Theme.of(context).accentColor)),
-                                    focusedErrorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
                                         borderSide:
-                                            BorderSide(color: Colors.red)),
+                                            BorderSide(color: Theme.of(context).accentColor)),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.red)),
                                     errorStyle: TextStyle(
                                       color: Colors.red,
                                     ),
@@ -242,8 +220,7 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                       ),
                                       onPressed: () {
                                         setState(() {
-                                          _confirmPasswordVisible =
-                                              !_confirmPasswordVisible;
+                                          _confirmPasswordVisible = !_confirmPasswordVisible;
                                         });
                                       },
                                     ),
@@ -264,10 +241,7 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                   },
                                   onChanged: (val) {
                                     setState(() {
-                                      _formKey
-                                          .currentState
-                                          .fields[confirmPasswordText]
-                                          .currentState
+                                      _formKey.currentState.fields[confirmPasswordText].currentState
                                           .validate();
                                     });
                                   },
@@ -276,20 +250,16 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                           Container(
                             height: 16,
                           ),
-                          BlocBuilder<RegistrationOrLoginBloc,
-                                  RegistrationOrLoginState>(
+                          BlocBuilder<RegistrationOrLoginBloc, RegistrationOrLoginState>(
                               builder: (context, state) {
                             return MyAppButtonFullWidth(
-                              text:
-                                  _signIn ? signInButtonText : signUpButtonText,
+                              text: _signIn ? signInButtonText : signUpButtonText,
                               showCircularProgressIndicator:
-                                  (state is RegistrationOrLoginProcessingState)
+                                  (state is RegistrationOrLoginProcessingState) ? true : false,
+                              showTickSymbol:
+                                  (state is SignInSuccessState || state is SignUpSuccessState)
                                       ? true
                                       : false,
-                              showTickSymbol: (state is SignInSuccessState ||
-                                      state is SignUpSuccessState)
-                                  ? true
-                                  : false,
                               onPressed: onPressed,
                             );
                           }),
@@ -307,9 +277,8 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                 },
                                 child: Text(
                                   _signIn ? signUpButtonText : signInButtonText,
-                                  style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                      fontSize: 16),
+                                  style:
+                                      TextStyle(color: Theme.of(context).accentColor, fontSize: 16),
                                 ),
                               ),
                             ),
@@ -357,8 +326,7 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
   }
 }
 
-void fieldFocusChange(
-    BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+void fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
   currentFocus.unfocus();
   FocusScope.of(context).requestFocus(nextFocus);
 }

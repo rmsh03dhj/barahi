@@ -14,8 +14,7 @@ class SignInUseCaseImpl implements SignInUseCase {
   @override
   Future<Either<Failure, User>> execute(SignInParams signUpParams) async {
     try {
-      final user = await userRepository.signIn(
-          signUpParams.email, signUpParams.password);
+      final user = await userRepository.signIn(signUpParams.email, signUpParams.password);
 
       if (user != null) {
         return Right(user);

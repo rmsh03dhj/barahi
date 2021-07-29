@@ -7,27 +7,17 @@ import 'package:barahi/core/error/failure.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/core/usecases/base_use_case.dart';
 
-abstract class DeleteImageUseCase
-    implements BaseUseCase<bool, DeleteImageInputParams> {}
+abstract class DeleteImageUseCase implements BaseUseCase<bool, String> {}
 
 class DeleteImageUseCaseImpl implements DeleteImageUseCase {
   final dashboardRepo = sl<DashboardRepository>();
   @override
-  Future<Either<Failure, bool>> execute(
-      DeleteImageInputParams uploadImageInputParams) async {
+  Future<Either<Failure, bool>> execute(String url) async {
     try {
-      await dashboardRepo.deleteImage(
-          uploadImageInputParams.deleteImageFrom, uploadImageInputParams.url);
+      await dashboardRepo.deleteImage(url);
       return Right(true);
     } catch (e) {
       return Left(GeneralFailure(failureMessage: e.toString()));
     }
   }
-}
-
-class DeleteImageInputParams {
-  final String deleteImageFrom;
-  final String url;
-
-  DeleteImageInputParams({this.deleteImageFrom = UPLOAD_IN, this.url});
 }
