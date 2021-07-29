@@ -10,13 +10,17 @@ To store, images, I have used [firebase storage](https://pub.dev/packages/fireba
 In the app user can
 
 - sign up, sign in or logout. (email and password only)
-- upload image both from camera and photo gallery and delete as well.
-- rename image file name at any time
-- add image to my favourite or remove from my favourite
-- share image
+- upload image both from camera and photo gallery.
+- delete image.
+- rename image file name at any time.
+- add/remove image to/from my favourite.
+- search image by file name.
+- share image.
 - rotate or zoom image
 - sort images by file name, favourite and uploaded date.
 - responsive to both landscape and potrait modes.
+
+**_Note: share image to other users and login with username is incomplete._**
 
 For project demo, I have attached a video below.
 
