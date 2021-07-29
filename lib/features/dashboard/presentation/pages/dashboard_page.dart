@@ -1,8 +1,10 @@
 import 'package:barahi/core/routes/weather_app_routes.dart';
+import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
 import 'package:barahi/features/dashboard/presentation/pages/widgets/image_viewer.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:barahi/core/services/navigation_service.dart';
@@ -87,6 +89,8 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
+                        BlocProvider.of<DashboardBloc>(context)
+                            .add(ListImages());
                         currentScreen = Home();
                         currentTab = 0;
                       });
@@ -126,6 +130,8 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
+                        BlocProvider.of<DashboardBloc>(context)
+                            .add(ListSharedImages());
                         currentScreen = SharedImages();
                         currentTab = 2;
                       });

@@ -77,6 +77,13 @@ class UpdateMyFavourite extends DashboardEvent {
 
   @override
   String toString() => 'UpdateMyFavourite';
+}class ShareImage extends DashboardEvent {
+  final ImageDetails imageDetails;
+
+  ShareImage({@required this.imageDetails});
+
+  @override
+  String toString() => 'ShareImage';
 }
 
 class SortByFileName extends DashboardEvent {

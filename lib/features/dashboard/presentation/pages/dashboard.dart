@@ -52,7 +52,8 @@ class _HomeState extends State<Home> {
                     controller: searchController,
                     focusNode: searchFocusNode,
                     onChanged: (val) {
-                      if (val.isEmpty) {
+                      print(val);
+                      if (val.isEmpty ) {
                         BlocProvider.of<DashboardBloc>(context)
                             .add(ListImages());
                       } else {
@@ -60,6 +61,7 @@ class _HomeState extends State<Home> {
                             .add(SearchImage(searchText: val));
                       }
                     },
+
                   ),
                 ),
                 BlocBuilder<DashboardBloc, DashboardState>(

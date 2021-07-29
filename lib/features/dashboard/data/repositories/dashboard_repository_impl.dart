@@ -122,10 +122,11 @@ class DashboardRepositoryImpl implements DashboardRepository {
         var list = [
           {
             "uploaded_at":
-                DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
+                DateFormat('yyyyMMdd').format(DateTime.now()),
             "fileName": fileName,
             "url": downloadUrl,
             "myFavourite": false,
+            "shared": false,
           }
         ];
         final exists =
@@ -188,11 +189,11 @@ class DashboardRepositoryImpl implements DashboardRepository {
             updatedDetails.add(element);
           } else {
             updatedDetails.add({
-              "uploaded_at":
-                  DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
+              "uploaded_at":imageDetails.uploadedAt,
               "fileName": imageDetails.fileName,
               "url": imageDetails.url,
               "myFavourite": imageDetails.myFavourite,
+              "shared": imageDetails.shared
             });
           }
         });
@@ -221,11 +222,11 @@ class DashboardRepositoryImpl implements DashboardRepository {
         List data = querySnapshot.data()['uploads'];
         data.forEach((element) {
           if (element['fileName'] == searchText) {
-            print("I am matched");
             imageDetails = ImageDetails(
                 url: element['url'],
                 myFavourite: element['myFavourite'],
                 fileName: element['fileName'],
+                shared: element['shared'],
                 uploadedAt: element['uploadedAt']);
           }
         });

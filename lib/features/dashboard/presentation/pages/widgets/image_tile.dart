@@ -34,13 +34,14 @@ class _ImageTileState extends State<ImageTile> {
       onTap: () => sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer,
           arguments: ImageViewerInput(imageDetail: widget.imageDetail)),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.5,
+        width: MediaQuery.of(context).size.width * 0.3,
         height: MediaQuery.of(context).size.height * 0.3,
+        color:Colors.red,
         child: Stack(
           children: [
             CachedNetworkImage(
               imageUrl: widget.imageDetail.url,
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
               errorWidget: (context, url, error) => Icon(Icons.access_alarms),
             ),
             Positioned(
@@ -88,6 +89,30 @@ class _ImageTileState extends State<ImageTile> {
                     },
                     child: Icon(
                       Icons.delete_forever,
+                      size: 36,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            widget.imageDetail.shared?Container():
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Container(
+                height: 32.0,
+                width: 32.0,
+                child: FittedBox(
+                  child: FloatingActionButton(
+                    heroTag: null,
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      BlocProvider.of<DashboardBloc>(context).add(
+                          ShareImage(
+                              imageDetails: widget.imageDetail));
+                    },
+                    child: Icon(
+                      Icons.share,
                       size: 36,
                     ),
                   ),
