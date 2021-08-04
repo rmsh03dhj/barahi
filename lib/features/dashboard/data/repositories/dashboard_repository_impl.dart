@@ -13,15 +13,6 @@ class DashboardRepositoryImpl implements DashboardRepository {
 
   FirebaseStorage storage = FirebaseStorage.instance;
 
-
-  @override
-  Future<ImageDetails> getImages() async {
-    try {
-    } catch (e) {
-      throw errorMessageSomethingWentWrong;
-    }
-  }
-
   Future<List<Map<String, dynamic>>> loadImages() async {
     List<Map<String, dynamic>> files = [];
 
@@ -34,9 +25,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
       files.add({
         "url": fileUrl,
         "path": file.fullPath,
-        "uploaded_by": fileMeta.customMetadata['uploaded_by'] ?? 'Nobody',
+        "uploaded_by": fileMeta.customMetadata!['uploaded_by'] ?? 'Nobody',
         "description":
-        fileMeta.customMetadata['description'] ?? 'No description'
+        fileMeta.customMetadata!['description'] ?? 'No description'
       });
     });
 

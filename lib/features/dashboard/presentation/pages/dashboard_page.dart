@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:barahi/core/routes/weather_app_routes.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/core/services/service_locator.dart';
-import 'package:barahi/features/app_start/presentation/bloc/app_start_bloc.dart';
-import 'package:barahi/features/app_start/presentation/bloc/app_start_event.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:barahi/features/utils/widgets/my_app_button.dart';
@@ -18,9 +14,8 @@ import 'shared.dart';
 import 'widgets/side_drawer.dart';
 
 class DashboardDashboardPage extends StatefulWidget {
-  final User user;
 
-  const DashboardDashboardPage({Key key, this.user}) : super(key: key);
+  const DashboardDashboardPage();
 
   @override
   _DashboardDashboardPageState createState() => _DashboardDashboardPageState();

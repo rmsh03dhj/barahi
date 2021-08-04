@@ -13,7 +13,7 @@ import 'features/registration_or_login/presentation/bloc/registration_or_login.d
 import 'features/registration_or_login/presentation/pages/register_or_login_page_wrapper.dart';
 
 class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
+  MyApp();
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -43,7 +43,6 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark(),
           routes: _registerRoutes(),
-          onGenerateRoute: _registerRoutesWithParameters,
         ),
       ),
     );
@@ -53,6 +52,7 @@ class _MyAppState extends State<MyApp> {
 Map<String, WidgetBuilder> _registerRoutes() {
   return <String, WidgetBuilder>{
     MyAppRoutes.home: (context) => SplashScreen(),
+    MyAppRoutes.dashboard: (context) => DashboardDashboardPage(),
     MyAppRoutes.signUpOrSignIn: (context) => _buildSignInWithEmailBloc(),
   };
 }
@@ -62,22 +62,4 @@ BlocProvider<RegistrationOrLoginBloc> _buildSignInWithEmailBloc() {
     create: (context) => sl<RegistrationOrLoginBloc>(),
     child: RegistrationOrLoginPageWrapper(),
   );
-}
-
-Route _registerRoutesWithParameters(RouteSettings settings) {
-  if (settings.name == MyAppRoutes.dashboard) {
-    final user = settings.arguments;
-    return MaterialPageRoute(
-      settings: RouteSettings(name: MyAppRoutes.dashboard),
-      builder: (context) {
-        return DashboardDashboardPage(user: user);
-      },
-    );
-  } else {
-    return MaterialPageRoute(
-      builder: (context) {
-        return SplashScreen();
-      },
-    );
-  }
 }

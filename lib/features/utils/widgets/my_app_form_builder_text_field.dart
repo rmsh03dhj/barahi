@@ -28,8 +28,8 @@ class MyAppFormBuilderTextField extends StatefulWidget {
   final ValueChanged onChanged;
 
   MyAppFormBuilderTextField(
-      {this.key,
-      @required this.attribute,
+      {
+      required this.attribute,
       this.controller,
       this.keyboardType,
       this.data,

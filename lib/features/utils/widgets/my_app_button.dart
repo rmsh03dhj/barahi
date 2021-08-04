@@ -11,7 +11,7 @@ class MyAppButton extends StatelessWidget {
   final bool showTickSymbol;
 
   const MyAppButton(
-      {Key key,
+      {
       this.text,
       this.onPressed,
       this.buttonColor,
