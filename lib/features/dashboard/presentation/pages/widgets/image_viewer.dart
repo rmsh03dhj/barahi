@@ -48,7 +48,8 @@ class _ImageViewerState extends State<ImageViewer> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DashboardBloc, DashboardState>(listener: (context, state) {
+    return BlocConsumer<DashboardBloc, DashboardState>(
+        listener: (context, state) {
       if (state is DashboardError) {
         Scaffold.of(context)
           ..showSnackBar(
@@ -133,7 +134,8 @@ class _ImageViewerState extends State<ImageViewer> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
-                          width: MediaQuery.of(context).orientation == Orientation.landscape
+                          width: MediaQuery.of(context).orientation ==
+                                  Orientation.landscape
                               ? MediaQuery.of(context).size.width * 0.75
                               : MediaQuery.of(context).size.width * 0.6,
                           child: FormBuilderTextField(
@@ -141,24 +143,44 @@ class _ImageViewerState extends State<ImageViewer> {
                             controller: fileNameController,
                             enableSuggestions: false,
                             autocorrect: false,
-                            // validators: [Validators.required()],
+                            validator: FormBuilderValidators.compose([
+                              Validators.required(),
+                            ]),
                             keyboardType: TextInputType.text,
                             focusNode: fileNameFocusNode,
                             onChanged: (val) {
                               setState(() {
-                                _formKey.currentState?.fields[emailText]?.validate();
+                                _formKey.currentState?.fields[fileName]
+                                    ?.validate();
                               });
                             },
                             onSubmitted: (_) {
                               submit();
                             },
+                            decoration: InputDecoration(
+                              labelText: fileName,
+                              border: new OutlineInputBorder(
+                                  borderSide:
+                                      new BorderSide(color: Colors.grey)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context).accentColor)),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.red)),
+                              errorStyle: TextStyle(
+                                color: Colors.red,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       BlocBuilder<DashboardBloc, DashboardState>(
                         builder: (context, state) {
                           return SizedBox(
-                            width: MediaQuery.of(context).orientation == Orientation.landscape
+                            width: MediaQuery.of(context).orientation ==
+                                    Orientation.landscape
                                 ? MediaQuery.of(context).size.width * 0.2
                                 : MediaQuery.of(context).size.width * 0.3,
                             child: Padding(
@@ -166,7 +188,9 @@ class _ImageViewerState extends State<ImageViewer> {
                               child: MyAppButton(
                                   text: saveButtonText,
                                   showCircularProgressIndicator:
-                                      (state is DashboardLoading) ? true : false,
+                                      (state is DashboardLoading)
+                                          ? true
+                                          : false,
                                   onPressed: submit),
                             ),
                           );
@@ -184,17 +208,17 @@ class _ImageViewerState extends State<ImageViewer> {
   }
 
   void submit() {
-    if (widget.imageViewerInput!.localImage != null) {
-      BlocProvider.of<DashboardBloc>(context).add(
-        UploadImage(
-          fileName: fileNameController.text,
-          file: File(widget.imageViewerInput!.localImage!),
-        ),
-      );
-    } else {
-      BlocProvider.of<DashboardBloc>(context).add(UpdateImageDetails(
-          imageDetails:
-              widget.imageViewerInput!.imageDetail!.copyWith(fileName: fileNameController.text)));
-    }
+      if (widget.imageViewerInput!.localImage != null) {
+        BlocProvider.of<DashboardBloc>(context).add(
+          UploadImage(
+            fileName: fileNameController.text,
+            file: File(widget.imageViewerInput!.localImage!),
+          ),
+        );
+      } else {
+        BlocProvider.of<DashboardBloc>(context).add(UpdateImageDetails(
+            imageDetails: widget.imageViewerInput!.imageDetail!
+                .copyWith(fileName: fileNameController.text)));
+      }
   }
 }

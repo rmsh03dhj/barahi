@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark(),
           routes: _registerRoutes(),
+          onGenerateRoute: _registerRoutesWithParameters,
         ),
       ),
     );
@@ -63,4 +64,22 @@ BlocProvider<RegistrationOrLoginBloc> _buildSignInWithEmailBloc() {
     create: (context) => sl<RegistrationOrLoginBloc>(),
     child: RegistrationOrLoginPageWrapper(),
   );
+}
+
+Route _registerRoutesWithParameters(RouteSettings settings) {
+  if (settings.name == MyAppRoutes.imageViewer) {
+    final imageViewerInput = settings.arguments as ImageViewerInput;
+    return MaterialPageRoute(
+      settings: RouteSettings(name: MyAppRoutes.imageViewer),
+      builder: (context) {
+        return ImageViewer(imageViewerInput: imageViewerInput);
+      },
+    );
+  } else {
+    return MaterialPageRoute(
+      builder: (context) {
+        return SplashScreen();
+      },
+    );
+  }
 }
