@@ -1,7 +1,4 @@
 import 'package:barahi/core/routes/my_app_routes.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
@@ -9,7 +6,23 @@ import 'package:barahi/features/registration_or_login/presentation/bloc/registra
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:barahi/features/utils/validators.dart';
 import 'package:barahi/features/utils/widgets/my_app_button_full_width.dart';
-import 'package:barahi/features/utils/widgets/my_app_form_builder_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+void fieldFocusChange(
+    BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+  currentFocus.unfocus();
+  FocusScope.of(context).requestFocus(nextFocus);
+}
+
+class RegistrationOrLoginPage extends StatefulWidget {
+  RegistrationOrLoginPage();
+
+  @override
+  _RegistrationOrLoginPageState createState() =>
+      _RegistrationOrLoginPageState();
+}
 
 class RegistrationOrLoginPageWrapper extends StatelessWidget {
   const RegistrationOrLoginPageWrapper();
@@ -20,13 +33,6 @@ class RegistrationOrLoginPageWrapper extends StatelessWidget {
       body: RegistrationOrLoginPage(),
     );
   }
-}
-
-class RegistrationOrLoginPage extends StatefulWidget {
-  RegistrationOrLoginPage();
-
-  @override
-  _RegistrationOrLoginPageState createState() => _RegistrationOrLoginPageState();
 }
 
 class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
@@ -41,11 +47,6 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
   bool _confirmPasswordVisible = true;
   final _navigateService = sl<NavigationService>();
   bool _signIn = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +81,8 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
         _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
       }
     }, child: SingleChildScrollView(
-      child:
-          BlocBuilder<RegistrationOrLoginBloc, RegistrationOrLoginState>(builder: (context, state) {
+      child: BlocBuilder<RegistrationOrLoginBloc, RegistrationOrLoginState>(
+          builder: (context, state) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,23 +117,43 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: MyAppFormBuilderTextField(
-                              attribute: emailText,
+                            child: FormBuilderTextField(
+                              name: emailText,
                               controller: _emailController,
                               enableSuggestions: false,
-                              autoCorrect: false,
-                              validators: [Validators.required(), Validators.emailValidator()],
-                              label: emailText,
-                              prefixIcon: Icon(Icons.person),
+                              autocorrect: false,
+                              validator: FormBuilderValidators.compose([
+                                Validators.required(),
+                                Validators.emailValidator(),
+                              ]),
                               keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelText: emailText,
+                                border: new OutlineInputBorder(
+                                    borderSide:
+                                    new BorderSide(color: Colors.grey)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).accentColor)),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.red)),
+                                errorStyle: TextStyle(
+                                  color: Colors.red,
+                                ),
+                                prefixIcon: Icon(Icons.person),
+                              ),
                               focusNode: _emailFocusNode,
                               onChanged: (val) {
                                 setState(() {
-                                  _formKey.currentState.fields[emailText].currentState.validate();
+                                  _formKey.currentState?.fields[emailText]
+                                      ?.validate();
                                 });
                               },
-                              onFieldSubmitted: (_) {
-                                fieldFocusChange(context, _emailFocusNode, _passwordFocusNode);
+                              onSubmitted: (_) {
+                                fieldFocusChange(context, _emailFocusNode,
+                                    _passwordFocusNode);
                               },
                             ),
                           ),
@@ -141,24 +162,29 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: MyAppFormBuilderTextField(
-                              attribute: passwordText,
+                            child: FormBuilderTextField(
+                              name: passwordText,
                               decoration: InputDecoration(
                                 labelText: passwordText,
                                 border: new OutlineInputBorder(
-                                    borderSide: new BorderSide(color: Colors.grey)),
+                                    borderSide:
+                                        new BorderSide(color: Colors.grey)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Theme.of(context).accentColor)),
-                                focusedErrorBorder:
-                                    OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).accentColor)),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.red)),
                                 errorStyle: TextStyle(
                                   color: Colors.red,
                                 ),
                                 prefixIcon: Icon(Icons.lock),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    _passwordVisible ? Icons.visibility_off : Icons.visibility,
+                                    _passwordVisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -169,24 +195,25 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                               ),
                               controller: _passwordController,
                               obscureText: _passwordVisible,
-                              validators: [
+                              validator: FormBuilderValidators.compose([
                                 Validators.required(),
                                 Validators.length(),
-                              ],
+                              ]),
                               keyboardType: TextInputType.text,
                               focusNode: _passwordFocusNode,
-                              onFieldSubmitted: (_) {
+                              onSubmitted: (_) {
                                 if (_signIn) {
                                   FocusScope.of(context).unfocus();
                                   onPressed();
                                 } else {
-                                  fieldFocusChange(context, _emailFocusNode, _passwordFocusNode);
+                                  fieldFocusChange(context, _emailFocusNode,
+                                      _passwordFocusNode);
                                 }
                               },
                               onChanged: (val) {
                                 setState(() {
-                                  _formKey.currentState.fields[passwordText].currentState
-                                      .validate();
+                                  _formKey.currentState?.fields[passwordText]
+                                      ?.validate();
                                 });
                               },
                             ),
@@ -197,18 +224,22 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                 )
                               : Container(),
                           !_signIn
-                              ? MyAppFormBuilderTextField(
-                                  attribute: confirmPasswordText,
+                              ? FormBuilderTextField(
+                                  name: confirmPasswordText,
                                   decoration: InputDecoration(
                                     labelText: confirmPasswordText,
                                     border: new OutlineInputBorder(
-                                        borderSide: new BorderSide(color: Colors.grey)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
                                         borderSide:
-                                            BorderSide(color: Theme.of(context).accentColor)),
+                                            new BorderSide(color: Colors.grey)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0)),
+                                        borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).accentColor)),
                                     focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.red)),
+                                        borderSide:
+                                            BorderSide(color: Colors.red)),
                                     errorStyle: TextStyle(
                                       color: Colors.red,
                                     ),
@@ -220,7 +251,8 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                       ),
                                       onPressed: () {
                                         setState(() {
-                                          _confirmPasswordVisible = !_confirmPasswordVisible;
+                                          _confirmPasswordVisible =
+                                              !_confirmPasswordVisible;
                                         });
                                       },
                                     ),
@@ -228,21 +260,22 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                   ),
                                   controller: _confirmPasswordController,
                                   obscureText: _confirmPasswordVisible,
-                                  validators: [
+                                  validator: FormBuilderValidators.compose([
                                     Validators.required(),
                                     Validators.confirmPasswordMatchWithPassword(
                                         _passwordController.text)
-                                  ],
+                                  ]),
                                   keyboardType: TextInputType.text,
                                   focusNode: _confirmPasswordFocusNode,
-                                  onFieldSubmitted: (_) {
+                                  onSubmitted: (_) {
                                     FocusScope.of(context).unfocus();
                                     onPressed();
                                   },
                                   onChanged: (val) {
                                     setState(() {
-                                      _formKey.currentState.fields[confirmPasswordText].currentState
-                                          .validate();
+                                      _formKey.currentState
+                                          ?.fields[confirmPasswordText]
+                                          ?.validate();
                                     });
                                   },
                                 )
@@ -250,16 +283,20 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                           Container(
                             height: 16,
                           ),
-                          BlocBuilder<RegistrationOrLoginBloc, RegistrationOrLoginState>(
+                          BlocBuilder<RegistrationOrLoginBloc,
+                                  RegistrationOrLoginState>(
                               builder: (context, state) {
                             return MyAppButtonFullWidth(
-                              text: _signIn ? signInButtonText : signUpButtonText,
+                              text:
+                                  _signIn ? signInButtonText : signUpButtonText,
                               showCircularProgressIndicator:
-                                  (state is RegistrationOrLoginProcessingState) ? true : false,
-                              showTickSymbol:
-                                  (state is SignInSuccessState || state is SignUpSuccessState)
+                                  (state is RegistrationOrLoginProcessingState)
                                       ? true
                                       : false,
+                              showTickSymbol: (state is SignInSuccessState ||
+                                      state is SignUpSuccessState)
+                                  ? true
+                                  : false,
                               onPressed: onPressed,
                             );
                           }),
@@ -277,8 +314,9 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                 },
                                 child: Text(
                                   _signIn ? signUpButtonText : signInButtonText,
-                                  style:
-                                      TextStyle(color: Theme.of(context).accentColor, fontSize: 16),
+                                  style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontSize: 16),
                                 ),
                               ),
                             ),
@@ -299,8 +337,23 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
     ));
   }
 
+  void dispose() {
+    _emailController.dispose();
+    _emailFocusNode.dispose();
+    _passwordController.dispose();
+    _passwordFocusNode.dispose();
+    _confirmPasswordController.dispose();
+    _confirmPasswordFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void onPressed() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       if (_signIn) {
         BlocProvider.of<RegistrationOrLoginBloc>(context).add(SignInPressed(
           _emailController.text,
@@ -314,19 +367,4 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
       }
     }
   }
-
-  void dispose() {
-    _emailController.dispose();
-    _emailFocusNode.dispose();
-    _passwordController.dispose();
-    _passwordFocusNode.dispose();
-    _confirmPasswordController.dispose();
-    _confirmPasswordFocusNode.dispose();
-    super.dispose();
-  }
-}
-
-void fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-  currentFocus.unfocus();
-  FocusScope.of(context).requestFocus(nextFocus);
 }

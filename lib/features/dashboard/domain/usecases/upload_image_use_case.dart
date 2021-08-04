@@ -27,5 +27,5 @@ class UploadImageInputParams {
   final File fileToUpload;
   final String fileName;
 
-  UploadImageInputParams({@required this.fileToUpload, @required this.fileName});
+  UploadImageInputParams({required this.fileToUpload, required this.fileName});
 }

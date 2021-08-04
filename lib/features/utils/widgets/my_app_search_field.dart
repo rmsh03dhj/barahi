@@ -8,16 +8,12 @@ class MyAppSearchField extends StatefulWidget {
   final ValueChanged onChanged;
   final FocusNode focusNode;
   final String hintText;
-  final ValueChanged<String> onFieldSubmitted;
-  final GestureTapCallback onTap;
 
   MyAppSearchField({
-    this.controller,
-    this.onChanged,
-    this.focusNode,
-    this.onFieldSubmitted,
-    this.hintText,
-    this.onTap,
+  required  this.controller,
+   required this.onChanged,
+  required  this.focusNode,
+   required this.hintText
   });
 
   @override
@@ -61,8 +57,6 @@ class _MyAppSearchFieldState extends State<MyAppSearchField> {
         hintText: widget.hintText,
       ),
       onChanged: widget.onChanged,
-      onFieldSubmitted: widget.onFieldSubmitted,
-      onTap: widget.onTap,
     );
   }
 }

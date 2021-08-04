@@ -23,7 +23,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<User> signIn(String email, String password) async {
     try {
       final result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return result.user;
+      return result.user!;
     } on FirebaseException catch (e, s) {
       if (e.code == "user-not-found") {
         throw errorMessageNoAccountFoundForEmail;
@@ -43,7 +43,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<User> signUp(String email, String password) async {
     try {
       final result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      return result.user;
+      return result.user!;
     } on FirebaseException catch (e) {
       if (e.code == "email-already-in-use") {
         throw errorMessageEmailUsed;

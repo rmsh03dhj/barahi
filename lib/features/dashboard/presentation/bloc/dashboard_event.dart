@@ -28,7 +28,7 @@ class UploadImage extends DashboardEvent {
   final File file;
   final String fileName;
 
-  UploadImage({@required this.file, @required this.fileName});
+  UploadImage({required this.file, required this.fileName});
 
   @override
   String toString() => 'UploadImage';
@@ -37,7 +37,7 @@ class UploadImage extends DashboardEvent {
 class DeleteImage extends DashboardEvent {
   final ImageDetails imageDetails;
 
-  DeleteImage({@required this.imageDetails});
+  DeleteImage({required this.imageDetails});
 
   @override
   String toString() => 'DeleteImage';
@@ -46,7 +46,7 @@ class DeleteImage extends DashboardEvent {
 class UpdateImageDetails extends DashboardEvent {
   final ImageDetails imageDetails;
 
-  UpdateImageDetails({@required this.imageDetails});
+  UpdateImageDetails({required this.imageDetails});
 
   @override
   String toString() => 'UpdateImageDetails';
@@ -55,7 +55,7 @@ class UpdateImageDetails extends DashboardEvent {
 class SearchImage extends DashboardEvent {
   final String searchText;
 
-  SearchImage({@required this.searchText});
+  SearchImage({required this.searchText});
 
   @override
   String toString() => 'SearchImage';
@@ -64,7 +64,7 @@ class SearchImage extends DashboardEvent {
 class UpdateMyFavourite extends DashboardEvent {
   final ImageDetails imageDetails;
 
-  UpdateMyFavourite({@required this.imageDetails});
+  UpdateMyFavourite({required this.imageDetails});
 
   @override
   String toString() => 'UpdateMyFavourite';
@@ -73,7 +73,7 @@ class UpdateMyFavourite extends DashboardEvent {
 class ShareImage extends DashboardEvent {
   final ImageDetails imageDetails;
 
-  ShareImage({@required this.imageDetails});
+  ShareImage({required this.imageDetails});
 
   @override
   String toString() => 'ShareImage';

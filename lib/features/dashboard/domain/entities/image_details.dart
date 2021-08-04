@@ -8,9 +8,9 @@ class ImageDetails {
   final bool shared;
 
   ImageDetails({
-    this.url,
-    this.fileName,
-    this.uploadedAt,
+   required this.url,
+    required this.fileName,
+    required this.uploadedAt,
     this.shared = false,
     this.myFavourite = false,
   });
@@ -23,11 +23,11 @@ class ImageDetails {
         fileName = data['fileName'];
 
   ImageDetails copyWith({
-    String url,
-    String fileName,
-    String uploadedAt,
-    bool myFavourite,
-    bool shared,
+    String? url,
+    String? fileName,
+    String? uploadedAt,
+    bool? myFavourite,
+    bool? shared,
   }) {
     return ImageDetails(
       url: url ?? this.url,

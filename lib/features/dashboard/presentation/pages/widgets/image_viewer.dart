@@ -9,7 +9,6 @@ import 'package:barahi/features/dashboard/domain/entities/image_details.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
 import 'package:barahi/features/utils/constants/strings.dart';
 import 'package:barahi/features/utils/validators.dart';
-import 'package:barahi/features/utils/widgets/my_app_form_builder_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,16 +17,16 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ImageViewerInput {
-  final ImageDetails imageDetail;
-  final String localImage;
+  final ImageDetails? imageDetail;
+  final String? localImage;
 
   ImageViewerInput({this.imageDetail, this.localImage});
 }
 
 class ImageViewer extends StatefulWidget {
-  final ImageViewerInput imageViewerInput;
+  final ImageViewerInput? imageViewerInput;
 
-  const ImageViewer({Key key, this.imageViewerInput}) : super(key: key);
+  const ImageViewer({this.imageViewerInput});
 
   @override
   _ImageViewerState createState() => _ImageViewerState();
@@ -42,8 +41,8 @@ class _ImageViewerState extends State<ImageViewer> {
   @override
   void initState() {
     super.initState();
-    if (widget.imageViewerInput.imageDetail != null) {
-      fileNameController.text = widget.imageViewerInput.imageDetail.fileName;
+    if (widget.imageViewerInput!.imageDetail != null) {
+      fileNameController.text = widget.imageViewerInput!.imageDetail!.fileName;
     }
   }
 
@@ -89,10 +88,10 @@ class _ImageViewerState extends State<ImageViewer> {
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: ClipRect(
-                  child: widget.imageViewerInput.localImage != null
+                  child: widget.imageViewerInput!.localImage != null
                       ? PhotoView(
                           imageProvider: AssetImage(
-                            widget.imageViewerInput.localImage,
+                            widget.imageViewerInput!.localImage!,
                           ),
                           minScale: PhotoViewComputedScale.contained * 0.8,
                           maxScale: PhotoViewComputedScale.covered * 2,
@@ -107,7 +106,7 @@ class _ImageViewerState extends State<ImageViewer> {
                         )
                       : PhotoView(
                           imageProvider: NetworkImage(
-                            widget.imageViewerInput.imageDetail.url,
+                            widget.imageViewerInput!.imageDetail!.url,
                           ),
                           minScale: PhotoViewComputedScale.contained * 0.8,
                           maxScale: PhotoViewComputedScale.covered * 2,
@@ -137,21 +136,20 @@ class _ImageViewerState extends State<ImageViewer> {
                           width: MediaQuery.of(context).orientation == Orientation.landscape
                               ? MediaQuery.of(context).size.width * 0.75
                               : MediaQuery.of(context).size.width * 0.6,
-                          child: MyAppFormBuilderTextField(
-                            attribute: fileName,
+                          child: FormBuilderTextField(
+                            name: fileName,
                             controller: fileNameController,
                             enableSuggestions: false,
-                            autoCorrect: false,
-                            validators: [Validators.required()],
-                            label: fileName,
+                            autocorrect: false,
+                            // validators: [Validators.required()],
                             keyboardType: TextInputType.text,
                             focusNode: fileNameFocusNode,
                             onChanged: (val) {
                               setState(() {
-                                _formKey.currentState.fields[emailText].currentState.validate();
+                                _formKey.currentState?.fields[emailText]?.validate();
                               });
                             },
-                            onFieldSubmitted: (_) {
+                            onSubmitted: (_) {
                               submit();
                             },
                           ),
@@ -186,17 +184,17 @@ class _ImageViewerState extends State<ImageViewer> {
   }
 
   void submit() {
-    if (widget.imageViewerInput.localImage != null) {
+    if (widget.imageViewerInput!.localImage != null) {
       BlocProvider.of<DashboardBloc>(context).add(
         UploadImage(
           fileName: fileNameController.text,
-          file: File(widget.imageViewerInput.localImage),
+          file: File(widget.imageViewerInput!.localImage!),
         ),
       );
     } else {
       BlocProvider.of<DashboardBloc>(context).add(UpdateImageDetails(
           imageDetails:
-              widget.imageViewerInput.imageDetail.copyWith(fileName: fileNameController.text)));
+              widget.imageViewerInput!.imageDetail!.copyWith(fileName: fileNameController.text)));
     }
   }
 }

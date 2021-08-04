@@ -16,7 +16,7 @@ class SearchImageUseCaseImpl implements SearchImageUseCase {
   Future<Either<Failure, ImageDetails>> execute(String searchText) async {
     try {
       final imageDetails = await dashboardRepo.searchImage(searchText);
-      return Right(imageDetails);
+      return Right(imageDetails!);
     } catch (e) {
       return Left(GeneralFailure(failureMessage: e.toString()));
     }

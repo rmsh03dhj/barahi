@@ -12,7 +12,7 @@ import '../../../domain/entities/image_details.dart';
 class ImageTile extends StatefulWidget {
   final ImageDetails imageDetail;
 
-  const ImageTile({Key key, @required this.imageDetail}) : super(key: key);
+  const ImageTile({required this.imageDetail});
 
   @override
   _ImageTileState createState() => _ImageTileState();

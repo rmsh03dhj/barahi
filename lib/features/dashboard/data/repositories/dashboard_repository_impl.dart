@@ -17,9 +17,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
     try {
       List<ImageDetails> images = [];
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser?.uid).get();
       if (querySnapshot.data() != null) {
-        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+        images = querySnapshot.data()?['uploads'].map<ImageDetails>((item) {
           return ImageDetails.fromMap(item);
         }).toList();
       }
@@ -34,9 +34,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
     try {
       List<ImageDetails> images = [];
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser?.uid).get();
       if (querySnapshot.data() != null) {
-        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+        images = querySnapshot.data()?['uploads'].map<ImageDetails>((item) {
           return ImageDetails.fromMap(item);
         }).toList();
       }
@@ -57,9 +57,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
     try {
       List<ImageDetails> images = [];
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser?.uid).get();
       if (querySnapshot.data() != null) {
-        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+        images = querySnapshot.data()?['uploads'].map<ImageDetails>((item) {
           return ImageDetails.fromMap(item);
         }).toList();
       }
@@ -90,9 +90,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
     try {
       List<ImageDetails> images = [];
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser?.uid).get();
       if (querySnapshot.data() != null) {
-        images = querySnapshot.data()['uploads'].map<ImageDetails>((item) {
+        images = querySnapshot.data()?['uploads'].map<ImageDetails>((item) {
           return ImageDetails.fromMap(item);
         }).toList();
       }
@@ -113,7 +113,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
     try {
       final firebaseUser = FirebaseAuth.instance.currentUser;
       final addingImage =
-          await storage.ref("/uploads/" + firebaseUser.uid + "/" + fileName).putFile(fileToUpload);
+          await storage.ref("/uploads/" + firebaseUser!.uid + "/" + fileName).putFile(fileToUpload);
       if (addingImage.state == TaskState.success) {
         final String downloadUrl = await addingImage.ref.getDownloadURL();
         var list = [
@@ -151,11 +151,11 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<void> deleteImage(String url) async {
     try {
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser?.uid).get();
       if (querySnapshot.data() != null) {
-        List data = querySnapshot.data()['uploads'];
+        List data = querySnapshot.data()?['uploads'];
         data.retainWhere((element) => element['url'] != url);
-        await fsInstance.collection("users").doc(firebaseUser.uid).set({"uploads": data});
+        await fsInstance.collection("users").doc(firebaseUser?.uid).set({"uploads": data});
         print(storage.refFromURL(url));
         storage.refFromURL(url).delete();
       }
@@ -171,9 +171,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<void> updateImageDetails(ImageDetails imageDetails) async {
     try {
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser?.uid).get();
       if (querySnapshot.data() != null) {
-        List data = querySnapshot.data()['uploads'];
+        List data = querySnapshot.data()?['uploads'];
         List updatedDetails = [];
         data.forEach((element) {
           if (element['url'] != imageDetails.url) {
@@ -188,7 +188,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
             });
           }
         });
-        await fsInstance.collection("users").doc(firebaseUser.uid).set({"uploads": updatedDetails});
+        await fsInstance.collection("users").doc(firebaseUser?.uid).set({"uploads": updatedDetails});
       }
     } on FirebaseException catch (error) {
       print(error);
@@ -199,14 +199,14 @@ class DashboardRepositoryImpl implements DashboardRepository {
     }
   }
 
-  Future<ImageDetails> searchImage(String searchText) async {
+  Future<ImageDetails?> searchImage(String searchText) async {
     try {
-      ImageDetails imageDetails;
+      ImageDetails? imageDetails;
 
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser.uid).get();
+      final querySnapshot = await fsInstance.collection("users").doc(firebaseUser?.uid).get();
       if (querySnapshot.data() != null) {
-        List data = querySnapshot.data()['uploads'];
+        List data = querySnapshot.data()?['uploads'];
         data.forEach((element) {
           if (element['fileName'] == searchText) {
             imageDetails = ImageDetails(

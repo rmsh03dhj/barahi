@@ -3,23 +3,22 @@ import 'package:flutter/material.dart';
 
 class MyAppButton extends StatelessWidget {
   final String text;
-  final Color buttonColor;
-  final Color textColor;
-  final Color borderColor;
+  final Color? buttonColor;
+  final Color? textColor;
+  final Color? borderColor;
   final VoidCallback onPressed;
   final bool showCircularProgressIndicator;
   final bool showTickSymbol;
 
   const MyAppButton(
       {
-      this.text,
-      this.onPressed,
+     required  this.text,
+    required   this.onPressed,
       this.buttonColor,
       this.textColor,
       this.showCircularProgressIndicator = false,
       this.showTickSymbol = false,
-      this.borderColor})
-      : super(key: key);
+      this.borderColor});
 
   @override
   Widget build(BuildContext context) {

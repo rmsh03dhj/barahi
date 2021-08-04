@@ -196,13 +196,13 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
     var imgCamera = await _picker.getImage(source: ImageSource.camera);
     Navigator.of(context).pop();
     sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer,
-        arguments: ImageViewerInput(localImage: imgCamera.path));
+        arguments: ImageViewerInput(localImage: imgCamera!.path));
   }
 
   void openGallery() async {
     var imgGallery = await _picker.getImage(source: ImageSource.gallery);
     Navigator.of(context).pop();
     sl<NavigationService>().navigateTo(MyAppRoutes.imageViewer,
-        arguments: ImageViewerInput(localImage: imgGallery.path));
+        arguments: ImageViewerInput(localImage: imgGallery!.path));
   }
 }
