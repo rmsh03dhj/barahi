@@ -13,7 +13,6 @@ import 'shared.dart';
 import 'widgets/side_drawer.dart';
 
 class DashboardDashboardPage extends StatefulWidget {
-
   const DashboardDashboardPage();
 
   @override
@@ -87,7 +86,8 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        BlocProvider.of<DashboardBloc>(context).add(ListImages());
+                        BlocProvider.of<DashboardBloc>(context)
+                            .add(ListImages());
                         currentScreen = Home();
                         currentTab = 0;
                       });
@@ -99,7 +99,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.home,
-                            color: currentTab == 0 ? Colors.tealAccent : Colors.grey,
+                            color: currentTab == 0
+                                ? Colors.tealAccent
+                                : Colors.grey,
                           ),
                         ),
                         Padding(
@@ -107,7 +109,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                           child: Text(
                             home,
                             style: TextStyle(
-                              color: currentTab == 0 ? Colors.tealAccent : Colors.grey,
+                              color: currentTab == 0
+                                  ? Colors.tealAccent
+                                  : Colors.grey,
                             ),
                           ),
                         ),
@@ -123,7 +127,8 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        BlocProvider.of<DashboardBloc>(context).add(ListSharedImages());
+                        BlocProvider.of<DashboardBloc>(context)
+                            .add(ListSharedImages());
                         currentScreen = SharedImages();
                         currentTab = 2;
                       });
@@ -137,7 +142,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.people,
-                                color: currentTab == 2 ? Colors.tealAccent : Colors.grey,
+                                color: currentTab == 2
+                                    ? Colors.tealAccent
+                                    : Colors.grey,
                               ),
                             ),
                           ],
@@ -147,7 +154,9 @@ class _DashboardDashboardPageState extends State<DashboardDashboardPage> {
                           child: Text(
                             shared,
                             style: TextStyle(
-                              color: currentTab == 2 ? Colors.tealAccent : Colors.grey,
+                              color: currentTab == 2
+                                  ? Colors.tealAccent
+                                  : Colors.grey,
                             ),
                           ),
                         ),
