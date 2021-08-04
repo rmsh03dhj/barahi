@@ -16,6 +16,7 @@ class CheckForAuthenticationUseCaseImpl implements CheckForAuthenticationUseCase
       final user = userRepository.getUser();
       return Right(user);
     } catch (e) {
+      print(e);
       return Left(GeneralFailure(failureMessage: e.toString()));
     }
   }

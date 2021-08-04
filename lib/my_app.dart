@@ -1,8 +1,9 @@
+import 'package:barahi/core/routes/my_app_routes.dart';
+import 'package:barahi/features/dashboard/presentation/pages/widgets/image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barahi/splash_screen.dart';
 
-import 'core/routes/weather_app_routes.dart';
 import 'core/services/service_locator.dart';
 import 'core/services/navigation_service.dart';
 import 'features/app_start/presentation/bloc/app_start_bloc.dart';

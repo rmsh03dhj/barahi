@@ -8,6 +8,7 @@ import 'registration_or_login_state.dart';
 class RegistrationOrLoginBloc extends Bloc<RegistrationOrLoginEvent, RegistrationOrLoginState> {
   final signUpUseCase = sl<SignUpUseCase>();
   final signInUseCase = sl<SignInUseCase>();
+
   RegistrationOrLoginBloc() : super(RegistrationOrLoginInitialState());
 
   @override
@@ -18,8 +19,9 @@ class RegistrationOrLoginBloc extends Bloc<RegistrationOrLoginEvent, Registratio
         email: event.email,
         password: event.password,
       ));
-      yield failureOrUser.fold((failure) => SignUpFailedState(failure.failureMessage),
-          (user) => SignUpSuccessState(user));
+      yield failureOrUser.fold((failure) => SignUpFailedState(failure.failureMessage), (user) {
+        return SignUpSuccessState(user);
+      });
     }
     if (event is SignInPressed) {
       yield RegistrationOrLoginProcessingState();

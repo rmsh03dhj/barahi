@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "88529803387",
+    "project_id": "photoviewer-90d50",
+    "storage_bucket": "photoviewer-90d50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88529803387:android:e55616e97743e0dd12aade",
+        "android_client_info": {
+          "package_name": "com.rdhoju.barahi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88529803387-ceokp94n7kvujm88f5007p3pgltg25kh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUvRByzOihSOgH3ZIOWfl19F4SmJmsAZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88529803387-ceokp94n7kvujm88f5007p3pgltg25kh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "88529803387-uherrh9euge2fms75vq9cv1pu70ojms6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rdhoju.barahi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

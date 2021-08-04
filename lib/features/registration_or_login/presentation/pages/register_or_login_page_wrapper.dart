@@ -1,7 +1,7 @@
+import 'package:barahi/core/routes/my_app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:barahi/core/routes/weather_app_routes.dart';
 import 'package:barahi/core/services/navigation_service.dart';
 import 'package:barahi/core/services/service_locator.dart';
 import 'package:barahi/features/dashboard/presentation/bloc/dashboard.dart';
@@ -72,14 +72,12 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
           );
       }
       if (state is SignUpSuccessState) {
-        BlocProvider.of<DashboardBloc>(context)..add(FetchDashboardForCurrentLocation());
-        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
-            arguments: state.user);
+        BlocProvider.of<DashboardBloc>(context)..add(ListImages());
+        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
       }
       if (state is SignInSuccessState) {
-        BlocProvider.of<DashboardBloc>(context)..add(FetchDashboardForCurrentLocation());
-        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
-            arguments: state.user);
+        BlocProvider.of<DashboardBloc>(context)..add(ListImages());
+        _navigateService.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
       }
     }, child: SingleChildScrollView(
       child:
@@ -94,8 +92,8 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
             Align(
               alignment: Alignment.topCenter,
               child: Image.asset(
-                "assets/login_icon.png",
-                scale: 5,
+                "assets/launcher_icon.jpg",
+                scale: 1.5,
               ),
             ),
             Padding(
@@ -178,7 +176,12 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                               keyboardType: TextInputType.text,
                               focusNode: _passwordFocusNode,
                               onFieldSubmitted: (_) {
-                                FocusScope.of(context).unfocus();
+                                if (_signIn) {
+                                  FocusScope.of(context).unfocus();
+                                  onPressed();
+                                } else {
+                                  fieldFocusChange(context, _emailFocusNode, _passwordFocusNode);
+                                }
                               },
                               onChanged: (val) {
                                 setState(() {
@@ -234,6 +237,7 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                   focusNode: _confirmPasswordFocusNode,
                                   onFieldSubmitted: (_) {
                                     FocusScope.of(context).unfocus();
+                                    onPressed();
                                   },
                                   onChanged: (val) {
                                     setState(() {
@@ -256,23 +260,7 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
                                   (state is SignInSuccessState || state is SignUpSuccessState)
                                       ? true
                                       : false,
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  if (_signIn) {
-                                    BlocProvider.of<RegistrationOrLoginBloc>(context)
-                                        .add(SignInPressed(
-                                      _emailController.text,
-                                      _passwordController.text,
-                                    ));
-                                  } else {
-                                    BlocProvider.of<RegistrationOrLoginBloc>(context)
-                                        .add(SignUpPressed(
-                                      _emailController.text,
-                                      _passwordController.text,
-                                    ));
-                                  }
-                                }
-                              },
+                              onPressed: onPressed,
                             );
                           }),
                           Container(
@@ -311,6 +299,22 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
     ));
   }
 
+  void onPressed() {
+    if (_formKey.currentState.validate()) {
+      if (_signIn) {
+        BlocProvider.of<RegistrationOrLoginBloc>(context).add(SignInPressed(
+          _emailController.text,
+          _passwordController.text,
+        ));
+      } else {
+        BlocProvider.of<RegistrationOrLoginBloc>(context).add(SignUpPressed(
+          _emailController.text,
+          _passwordController.text,
+        ));
+      }
+    }
+  }
+
   void dispose() {
     _emailController.dispose();
     _emailFocusNode.dispose();
@@ -320,9 +324,9 @@ class _RegistrationOrLoginPageState extends State<RegistrationOrLoginPage> {
     _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
+}
 
-  void fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
+void fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+  currentFocus.unfocus();
+  FocusScope.of(context).requestFocus(nextFocus);
 }

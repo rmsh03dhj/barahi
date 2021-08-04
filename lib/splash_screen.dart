@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:barahi/core/routes/my_app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'core/routes/weather_app_routes.dart';
 import 'core/services/service_locator.dart';
 import 'core/services/navigation_service.dart';
 import 'features/app_start/presentation/bloc/app_start_bloc.dart';
@@ -29,16 +29,14 @@ class _SplashScreenState extends State<SplashScreen> {
       listener: (context, state) {
         if (state is Unauthenticated || state is Uninitialized) {
           Timer(
-            Duration(seconds: 5),
+            Duration(seconds: 1),
             () => navigator.navigateToAndReplace(MyAppRoutes.signUpOrSignIn),
           );
         }
         if (state is Authenticated) {
-          Timer(Duration(seconds: 5), () async {
-            BlocProvider.of<DashboardBloc>(context)
-              ..add(FetchDashboardForCurrentLocation());
-            navigator.navigateToAndRemoveUntil(MyAppRoutes.dashboard,
-                arguments: state.user);
+          Timer(Duration(seconds: 1), () async {
+            BlocProvider.of<DashboardBloc>(context)..add(ListImages());
+            navigator.navigateToAndRemoveUntil(MyAppRoutes.dashboard);
           });
         }
       },
@@ -62,9 +60,9 @@ class _SplashScreenState extends State<SplashScreen> {
               Container(
                 height: 100,
               ),
-              // Image.asset(
-              //   "assets/weather_animation.gif",
-              // ),
+              Image.asset(
+                "assets/launcher_icon.jpg",
+              ),
             ],
           ),
         ),
